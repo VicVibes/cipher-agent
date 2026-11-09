@@ -9,15 +9,20 @@ extracted project directory.
 node --version
 ```
 
-If Node.js is missing or older than 24.9, install a current Node 24 release
-with [nvm](https://github.com/nvm-sh/nvm#installing-and-updating). Kali's
-stock `apt` packages may be too old for the runtime.
+If Node.js is missing or older than 24.9, install nvm using its
+[official instructions](https://github.com/nvm-sh/nvm#installing-and-updating),
+then download and select Node.js 24:
 
 ```bash
 nvm install 24
 nvm use 24
 node --version
+npm --version
 ```
+
+`node --version` should report `v24.9.0` or newer. Node.js downloads and release
+information are available from the [official Node.js site](https://nodejs.org/en/download).
+Kali's stock `apt` packages may be too old for the runtime.
 
 ## 2. Install and start CIPHER
 
@@ -57,6 +62,18 @@ Admin (only when required for a clearly scoped, authorized local lab):
 It asks for your password, then runs the agent as root. Prefer normal
 permissions; use this only for an explicitly authorized task on a machine you
 own. Admin is also a permission level inside CIPHER and requires approvals.
+
+To authenticate once and avoid another prompt during sudo's configured
+credential-cache period:
+
+```bash
+sudo -v
+./scripts/cipher-admin.sh
+```
+
+This still uses your password; it only avoids repeated prompts until the
+normal timeout expires. Do not configure passwordless `NOPASSWD` sudo for
+CIPHER. Use `sudo -k` to clear the cached authentication.
 
 ## 3. Add a model key
 

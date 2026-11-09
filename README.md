@@ -27,15 +27,29 @@ cd cipher-agent
 
 Install Node.js 24.9 or newer first:
 
-- **Windows:** use the official [Node.js installer](https://nodejs.org/en/download),
-  then double-click `install.bat`.
-- **Linux/macOS:** use [nvm](https://github.com/nvm-sh/nvm#installing-and-updating),
-  run `nvm install 24`, then from the project folder run:
+- **Windows:** open the official [Node.js downloads page](https://nodejs.org/en/download),
+  choose the LTS release (24.9 or newer) and Windows Installer (`.msi`), then
+  run the downloaded installer. Reopen PowerShell after setup.
+- **Linux/macOS:** install [nvm](https://github.com/nvm-sh/nvm#installing-and-updating),
+  then run:
+
+  ```sh
+  nvm install 24
+  nvm use 24
+  node --version
+  npm --version
+  ```
+
+  `node --version` should report `v24.9.0` or newer. Then, from the project
+  folder, run:
 
   ```sh
   chmod +x install.sh
   ./install.sh
   ```
+
+On Windows, verify `node --version` and `npm --version` in a new PowerShell
+window, then double-click `install.bat`.
 
 The installer installs the CIPHER runtime dependencies on first run, then
 starts the GUI. Add your model key under **Settings → Models**.
