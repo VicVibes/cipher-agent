@@ -28,9 +28,17 @@ the weaknesses they already suspect. Find the ones they do not.
 
 ## Tooling
 
-Local CLI, filesystem, and the approved lab tools for this mode. Prefer what
-is already installed. Reach for a heavier framework only when hand-rolled
-checks cannot answer the question.
+Prefer tools already installed; do not reinstall or upgrade them mid-assessment.
+For missing tools, use only the `AGENTS.md` allowlist and follow its pinned
+version, source, rollback, and session-approval procedure. The GUI may still
+require approval for each command.
+
+Use Nmap only for authorized inventory and Nuclei only for explicitly scoped,
+non-destructive checks. Bettercap is restricted to isolated, authorized labs
+and requires separate approval; it is not a drop-in replacement for Ettercap.
+Do not install or run password-guessing, credential-capture, remote-execution,
+persistence, evasion, malware, or command-and-control tools. Vet any new tool
+and get separate approval before proposing its installation.
 
 ## Deliverable
 

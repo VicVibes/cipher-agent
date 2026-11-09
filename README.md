@@ -109,14 +109,17 @@ follows `AGENTS.md` and requires explicit authorization and scope.
 
 ## Security tool access
 
-CIPHER can set up a missing tool in the GUI only after you approve the tool,
-official source, exact install command, and any required elevation. The CLI
-defaults to read-only and has no live approval prompt, so do not use it to
+CIPHER can install needed tools from the limited allowlist in `AGENTS.md`.
+Before installation, it must show the exact tool set, pinned versions, official
+sources, install and rollback commands, then get your approval for that session.
+This does not bypass the GUI's command approvals. Elevation, drivers, services,
+paid tools, and tools outside the allowlist need separate approval. The CLI is
+read-only by default and has no live approval prompt, so do not use it to
 install tools. Installing a tool does not authorize testing a target; active
-use still requires separate scope approval. Nmap is for authorized inventory,
-Nuclei for explicitly scoped checks, and Bettercap (rather than Ettercap) is
-for isolated, authorized labs; it is not a drop-in replacement. Hydra and
-other password-guessing tools are excluded.
+use still requires separate scope approval. Nmap is limited to authorized
+inventory and Nuclei to scoped, non-destructive checks. Bettercap is restricted
+to isolated, authorized labs and is not a drop-in replacement for Ettercap.
+Password-guessing and credential-capture tools are not supported.
 
 ## Authorized use and privacy
 
