@@ -12,6 +12,13 @@ shared rules are in `AGENTS.md`; each mode adds one editable instruction file:
 
 ## Install and start
 
+Clone the repository and enter the project folder:
+
+```sh
+git clone https://github.com/VicVibes/cipher-agent.git
+cd cipher-agent
+```
+
 Install Node.js 24.9 or newer first:
 
 - **Windows:** use the official [Node.js installer](https://nodejs.org/en/download),
