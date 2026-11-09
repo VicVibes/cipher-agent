@@ -1,0 +1,14 @@
+{
+  "name": "vibex-runtime",
+  "version": "1.0.0",
+  "description": "vibeX DSH runtime dependencies",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "@deepseek-ai/dsh": "^0.2.2-rc.1"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=24.9.0"
+  }
+}

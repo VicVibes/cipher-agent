@@ -1,0 +1,35 @@
+# Dependencies and generated output
+node_modules/
+dist/
+build/
+*.log
+*.tmp
+npm-debug.log*
+
+# Local credentials, browser state, and vibeX runtime data
+.env
+.env.*
+.dsh/.credentials.yaml
+.dsh/.anonymous-user-id
+.dsh/last-url.txt
+.dsh/gui-window-profile/
+.dsh/logs/
+.dsh/sessions/
+.dsh/storages/
+.dsh/verify/
+.dsh/skills/cyber-recon/
+.dsh/skills/exploit-development/
+.dsh/skills/network-exploitation/
+.dsh/skills/web-pentest/
+chrome-branding/branding/.chrome-profile/
+AGENTS.local.md
+CLAUDE.md
+CLAUDE.local.md
+.vscode/
+.idea/
+
+# Local backups and OS metadata
+*.bak
+*.zip
+.DS_Store
+Thumbs.db

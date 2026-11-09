@@ -1,0 +1,16 @@
+{
+  "name": "vibex-agent",
+  "version": "1.0.0",
+  "private": true,
+  "description": "vibeX authorized cybersecurity agent with GUI and CLI launchers.",
+  "license": "MIT",
+  "scripts": {
+    "setup": "npm install --prefix node-app",
+    "start": "npm run start:gui",
+    "start:gui": "node scripts/launch-gui.mjs",
+    "start:cli": "node scripts/launch-cli.mjs"
+  },
+  "engines": {
+    "node": ">=24.9.0"
+  }
+}

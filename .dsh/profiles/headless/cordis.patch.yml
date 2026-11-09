@@ -1,0 +1,63 @@
+- id: system-prompt
+  config:
+    personaPrefix: >-
+      You are vibeX, a cybersecurity assistant. AGENTS.md is authoritative:
+      follow its shared rules and the selected vibeX mode instructions.
+
+- id: agent-instructions
+  config:
+    maxBytes: 65536
+    instructionFileCandidates: !!js "['AGENTS.md', process.env.VIBEX_MODE === 'red-team' ? 'VIBEX-RED-TEAM.md' : process.env.VIBEX_MODE === 'research-mode' ? 'VIBEX-RESEARCH-MODE.md' : 'VIBEX-BLUE-TEAM.md', 'CLAUDE.md', 'AGENTS.local.md', 'CLAUDE.local.md']"
+
+- id: llm-deepseek
+  disabled: true
+
+- id: llm-pi-ai
+  name: "@deepseek-ai/dsh-llm-pi-ai"
+  config:
+    providers:
+      venice:
+        api: openai-completions
+        baseURL: https://api.venice.ai/api/v1
+        models:
+          - id: e2ee-deepseek-v4-1-flash-1017-abliterated
+            name: DeepSeek V4.1 Flash 1017 (Abliterated, E2EE)
+            contextWindow: 131072
+            maxTokens: 8192
+            input: [text]
+          - id: e2ee-glm-5-3-flash
+            name: GLM 5.3 Flash (E2EE)
+            contextWindow: 131072
+            maxTokens: 8192
+            input: [text, image]
+          - id: deepseek-v4-1-flash
+            name: DeepSeek V4.1 Flash
+            contextWindow: 131072
+            maxTokens: 8192
+            input: [text, image]
+          - id: z-ai-glm-5-3-flash
+            name: GLM 5.3 Flash
+            contextWindow: 131072
+            maxTokens: 8192
+            input: [text, image]
+        displayName: Venice
+        apiKeyEnv: VENICE_API_KEY
+
+- id: agent-default-model
+  name: "@deepseek-ai/dsh-agent-default-model"
+  config:
+    provider: venice
+    model: e2ee-deepseek-v4-1-flash-1017-abliterated
+
+- id: credentials
+  disabled: false
+
+- id: authorization
+  disabled: false
+
+- id: sandbox-policy
+  inject: [headlessStartup]
+  config:
+    mode: !!js "process.env.DSH_PERMISSION_MODE ?? 'read-only'"
+    workspaceRoot: !!js process.cwd()
+    additionalWritableRoots: !!js ctx.headlessStartup.additionalWritableRoots
