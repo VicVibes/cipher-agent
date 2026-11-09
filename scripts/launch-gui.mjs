@@ -1,4 +1,4 @@
-// vibeX GUI launcher — boots the vibeX engine and opens the UI in a standalone app window.
+// CIPHER GUI launcher — boots the CIPHER engine and opens the UI in a standalone app window.
 import { spawn, execFileSync } from 'node:child_process';
 import { existsSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -7,16 +7,16 @@ import net from 'node:net';
 import os from 'node:os';
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
-const root = join(scriptDir, '..'); // vibeX home: AGENTS.md, .dsh, node-app
+const root = join(scriptDir, '..'); // CIPHER home: AGENTS.md, .dsh, node-app
 const dshBin = join(root, 'node-app', 'node_modules', '@deepseek-ai', 'dsh', 'lib', 'bin.js');
 const dshHome = join(root, '.dsh');
 const env = { ...process.env, DSH_HOME: dshHome };
 const PORT = 3080;
-const LAN_MODE = process.env.VIBEX_LAN === '1';
+const LAN_MODE = process.env.CIPHER_LAN === '1';
 
 console.log('');
 console.log('  ============================================');
-console.log(LAN_MODE ? '    vibeX is starting in PHONE mode...' : '    vibeX GUI is starting...');
+console.log(LAN_MODE ? '    CIPHER is starting in PHONE mode...' : '    CIPHER GUI is starting...');
 console.log('    Boot can take 2-5 minutes. Keep this open.');
 console.log('    A dedicated app window will open when ready.');
 if (LAN_MODE) console.log('    Your phone can connect over the same Wi-Fi.');
@@ -42,7 +42,7 @@ function lanAddress() {
 
 const lan = LAN_MODE ? lanAddress() : undefined;
 if (LAN_MODE && !lan) {
-  console.log('  No LAN IPv4 address found. Connect this PC to Wi-Fi or run vibeX normally.');
+  console.log('  No LAN IPv4 address found. Connect this PC to Wi-Fi or run CIPHER normally.');
   process.exit(1);
 }
 if (LAN_MODE) console.log(`  Phone mode: serving on ${lan}:${PORT} (same Wi-Fi only).\n`);
@@ -133,15 +133,15 @@ async function clearStaleServer() {
   if (!(await portInUse(PORT))) return true;
   const pid = findPidOnPort(PORT);
   if (!pid) {
-    console.log(`  Port ${PORT} is busy and the owner could not be identified. Close the other vibeX window and retry.`);
+    console.log(`  Port ${PORT} is busy and the owner could not be identified. Close the other CIPHER window and retry.`);
     return false;
   }
   const image = processImageName(pid);
   if (!/node/.test(image)) {
-    console.log(`  Port ${PORT} is held by "${image}" (PID ${pid}), which is not vibeX. Close it and retry.`);
+    console.log(`  Port ${PORT} is held by "${image}" (PID ${pid}), which is not CIPHER. Close it and retry.`);
     return false;
   }
-  console.log(`  A stale vibeX server (PID ${pid}) is still on port ${PORT} — stopping it...`);
+  console.log(`  A stale CIPHER server (PID ${pid}) is still on port ${PORT} — stopping it...`);
   if (await stopStaleServer(pid)) {
     console.log('  Port freed. Continuing...\n');
     return true;
@@ -164,25 +164,51 @@ function linuxBrowser() {
   return null;
 }
 
+function macBrowser() {
+  const apps = ['Google Chrome', 'Chromium', 'Microsoft Edge', 'Brave Browser'];
+  const candidates = apps.flatMap((name) => [
+    join('/Applications', `${name}.app`, 'Contents', 'MacOS', name),
+    join(os.homedir(), 'Applications', `${name}.app`, 'Contents', 'MacOS', name),
+  ]);
+  return candidates.find(existsSync) || null;
+}
+
 function openAppWindow(url) {
   if (opened) return;
   opened = true;
   const guiProfile = join(dshHome, 'gui-window-profile');
+  if (process.platform === 'darwin') {
+    const browser = macBrowser();
+    if (browser) {
+      spawn(browser, [
+        `--app=${url}`,
+        '--window-size=1360,900',
+        `--user-data-dir=${guiProfile}`,
+      ], { detached: true, stdio: 'ignore' }).unref();
+      console.log('\n  CIPHER GUI window opened. This console keeps the server alive.\n');
+    } else {
+      spawn('open', [url], { detached: true, stdio: 'ignore' }).unref();
+      console.log('\n  No Chrome/Chromium found — opened in your default browser instead.\n');
+    }
+    console.log('  IMPORTANT: always open CIPHER from this launcher (or the saved URL below).');
+    console.log('  Typing 127.0.0.1:3080 by hand will show "authentication required".\n');
+    return;
+  }
   if (process.platform !== 'win32') {
     const browser = linuxBrowser();
     if (browser) {
-      const args = [`--app=${url}`, '--window-size=1360,900', `--user-data-dir=${guiProfile}`, '--class=vibeX'];
+      const args = [`--app=${url}`, '--window-size=1360,900', `--user-data-dir=${guiProfile}`, '--class=CIPHER'];
       // Chrome refuses to run as root without these, which matters on Kali.
       if (typeof process.getuid === 'function' && process.getuid() === 0) {
         args.push('--no-sandbox', '--disable-dev-shm-usage');
       }
       spawn(browser, args, { detached: true, stdio: 'ignore' }).unref();
-      console.log('\n  vibeX GUI window opened. This console keeps the server alive.\n');
+      console.log('\n  CIPHER GUI window opened. This console keeps the server alive.\n');
     } else {
       spawn('xdg-open', [url], { detached: true, stdio: 'ignore' }).unref();
       console.log('\n  No Chrome/Chromium found — opened in your default browser instead.\n');
     }
-    console.log('  IMPORTANT: always open vibeX from this launcher (or the saved URL below).');
+    console.log('  IMPORTANT: always open CIPHER from this launcher (or the saved URL below).');
     console.log('  Typing 127.0.0.1:3080 by hand will show "authentication required".\n');
     return;
   }
@@ -201,12 +227,12 @@ function openAppWindow(url) {
       '--window-size=1360,900',
       `--user-data-dir=${guiProfile}`,
     ], { detached: true, stdio: 'ignore' }).unref();
-    console.log('\n  vibeX GUI window opened. This console keeps the server alive.\n');
+    console.log('\n  CIPHER GUI window opened. This console keeps the server alive.\n');
   } else {
     spawn('cmd', ['/c', 'start', '', url], { detached: true, stdio: 'ignore' }).unref();
     console.log('\n  No Edge/Chrome found — opened in your default browser instead.\n');
   }
-  console.log('  IMPORTANT: always open vibeX from this launcher (or the saved URL below).');
+  console.log('  IMPORTANT: always open CIPHER from this launcher (or the saved URL below).');
   console.log('  Typing 127.0.0.1:3080 by hand will show "authentication required".\n');
 }
 
@@ -255,12 +281,12 @@ async function start() {
   }
   child = spawn(process.execPath, args, {
     cwd: root, env, stdio: ['ignore', 'pipe', 'pipe'],
-  }); // workspace stays vibeX home so AGENTS.md is always the active brief
+  }); // workspace stays CIPHER home so AGENTS.md is always the active brief
 
   child.stdout.on('data', watch);
   child.stderr.on('data', watch);
   child.on('exit', (code) => {
-    console.log(`\n  vibeX server exited (code ${code ?? 0}).`);
+    console.log(`\n  CIPHER server exited (code ${code ?? 0}).`);
     process.exit(code ?? 0);
   });
 }

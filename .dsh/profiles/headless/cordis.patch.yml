@@ -1,13 +1,13 @@
 - id: system-prompt
   config:
     personaPrefix: >-
-      You are vibeX, a cybersecurity assistant. AGENTS.md is authoritative:
-      follow its shared rules and the selected vibeX mode instructions.
+      You are CIPHER, a cybersecurity assistant. AGENTS.md is authoritative:
+      follow its shared rules and the selected CIPHER mode instructions.
 
 - id: agent-instructions
   config:
     maxBytes: 65536
-    instructionFileCandidates: !!js "['AGENTS.md', process.env.VIBEX_MODE === 'red-team' ? 'VIBEX-RED-TEAM.md' : process.env.VIBEX_MODE === 'research-mode' ? 'VIBEX-RESEARCH-MODE.md' : 'VIBEX-BLUE-TEAM.md', 'CLAUDE.md', 'AGENTS.local.md', 'CLAUDE.local.md']"
+    instructionFileCandidates: !!js "['AGENTS.md', process.env.CIPHER_MODE === 'red-team' ? 'CIPHER-RED-TEAM.md' : process.env.CIPHER_MODE === 'research-mode' ? 'CIPHER-RESEARCH-MODE.md' : 'CIPHER-BLUE-TEAM.md', 'CLAUDE.md', 'AGENTS.local.md', 'CLAUDE.local.md']"
 
 - id: llm-deepseek
   disabled: true

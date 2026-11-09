@@ -1,7 +1,7 @@
 {
-  "name": "vibex-brand",
+  "name": "cipher-brand",
   "version": "0.1.0",
-  "description": "vibeX identity, branding, model-key setup, and editable agent instructions",
+  "description": "CIPHER identity, branding, model-key setup, and editable agent instructions",
   "private": true,
   "type": "module",
   "main": "lib/index.js",

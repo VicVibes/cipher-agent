@@ -6,8 +6,8 @@
   config:
     welcomeNoticeVersion: 2026-09-28.1
 
-# vibeX identity: drop the official DeepSeek sidebar brand occupants and use
-# the local vibex-brand package instead. It fills the same sidebar slots and
+# CIPHER identity: drop the official DeepSeek sidebar brand occupants and use
+# the local cipher-brand package instead. It fills the same sidebar slots and
 # adds a "Set up model key" entry to the sidebar footer.
 - id: ui-brand-official
   disabled: true
@@ -17,10 +17,10 @@
   disabled: true
 
 - insert:
-    - id: vibex-brand
-      name: vibex-brand
+    - id: cipher-brand
+      name: cipher-brand
 
-# ── vibeX security posture ────────────────────────────────────────────────
+# ── CIPHER security posture ────────────────────────────────────────────────
 # Security postures share the standard tool composition and follow AGENTS.md.
 - id: preset-standard
   disabled: true
@@ -59,7 +59,7 @@
         sandbox: danger-full-access
         approval: ask
         name: Admin (full access)
-        description: "Full filesystem and command access; vibeX asks before each
+        description: "Full filesystem and command access; CIPHER asks before each
           action. Use only for a clearly scoped, authorized task."
 
 - insert:
@@ -83,7 +83,7 @@
               maxBytes: 65536
               instructionFileCandidates:
                 - AGENTS.md
-                - VIBEX-RED-TEAM.md
+                - CIPHER-RED-TEAM.md
           - id: time-context
             name: '@deepseek-ai/dsh-time-context'
           - id: tool-bash
@@ -228,7 +228,7 @@
               maxBytes: 65536
               instructionFileCandidates:
                 - AGENTS.md
-                - VIBEX-BLUE-TEAM.md
+                - CIPHER-BLUE-TEAM.md
           - id: time-context
             name: '@deepseek-ai/dsh-time-context'
           - id: tool-bash
@@ -363,7 +363,7 @@
               maxBytes: 65536
               instructionFileCandidates:
                 - AGENTS.md
-                - VIBEX-RESEARCH-MODE.md
+                - CIPHER-RESEARCH-MODE.md
           - id: time-context
             name: '@deepseek-ai/dsh-time-context'
           - id: tool-bash

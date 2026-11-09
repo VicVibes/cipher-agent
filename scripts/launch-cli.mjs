@@ -16,7 +16,7 @@ for (let index = 0; index < args.length;) {
   if (arg === '--mode') {
     const value = args[index + 1];
     if (!value) {
-      console.error('vibeX CLI: --mode requires blue-team, red-team, or research-mode.');
+      console.error('CIPHER CLI: --mode requires blue-team, red-team, or research-mode.');
       process.exit(2);
     }
     mode = value;
@@ -31,7 +31,7 @@ for (let index = 0; index < args.length;) {
   if (arg === '--permission-mode') {
     const value = args[index + 1];
     if (!value) {
-      console.error('vibeX CLI: --permission-mode requires read-only or workspace-write.');
+      console.error('CIPHER CLI: --permission-mode requires read-only or workspace-write.');
       process.exit(2);
     }
     permissionMode = value;
@@ -45,17 +45,17 @@ for (let index = 0; index < args.length;) {
 }
 
 if (!allowedModes.has(mode)) {
-  console.error(`vibeX CLI: unsupported mode "${mode}". Use blue-team, red-team, or research-mode.`);
+  console.error(`CIPHER CLI: unsupported mode "${mode}". Use blue-team, red-team, or research-mode.`);
   process.exit(2);
 }
 
 if (!allowedPermissionModes.has(permissionMode)) {
-  console.error(`vibeX CLI: unsupported permission mode "${permissionMode}". Use read-only or workspace-write.`);
+  console.error(`CIPHER CLI: unsupported permission mode "${permissionMode}". Use read-only or workspace-write.`);
   process.exit(2);
 }
 
 if (args.length === 0 || args.includes('--help') || args.includes('-h')) {
-  console.log(`vibeX CLI
+  console.log(`CIPHER CLI
 
 Usage: node scripts/launch-cli.mjs [options] <task>
 
@@ -73,12 +73,12 @@ The CLI runs one task per invocation and has no live approval prompt.`);
 }
 
 if (!existsSync(dshBin)) {
-  console.error('vibeX CLI: dependencies are missing. Run "npm run setup" from the project root.');
+  console.error('CIPHER CLI: dependencies are missing. Run "npm run setup" from the project root.');
   process.exit(1);
 }
 
 const dshArgs = ['--profile', 'headless', ...args];
-console.error(`vibeX CLI starting in ${mode} mode (${permissionMode}).`);
+console.error(`CIPHER CLI starting in ${mode} mode (${permissionMode}).`);
 
 const result = spawnSync(process.execPath, [dshBin, ...dshArgs], {
   cwd: root,
@@ -86,13 +86,13 @@ const result = spawnSync(process.execPath, [dshBin, ...dshArgs], {
     ...process.env,
     DSH_HOME: join(root, '.dsh'),
     DSH_PERMISSION_MODE: permissionMode,
-    VIBEX_MODE: mode,
+    CIPHER_MODE: mode,
   },
   stdio: 'inherit',
 });
 
 if (result.error) {
-  console.error(`vibeX CLI: ${result.error.message}`);
+  console.error(`CIPHER CLI: ${result.error.message}`);
   process.exit(1);
 }
 

@@ -1,8 +1,8 @@
 {
-  "name": "vibex-agent-web-profile",
+  "name": "cipher-agent-web-profile",
   "private": true,
   "dependencies": {
-    "vibex-brand": "file:../../../vibex-brand"
+    "cipher-brand": "file:../../../cipher-brand"
   },
   "dsh": {
     "profile": {

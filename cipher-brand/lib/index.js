@@ -1,4 +1,4 @@
-// vibeX brand plugin — host half.
+// CIPHER brand plugin — host half.
 //
 // The browser half carries the presentation (sidebar mark, wordmark, copy
 // scrubber, settings section). This host half serves the shared policy and
@@ -7,33 +7,33 @@
 // The file is served over two authenticated routes on the same loopback
 // webserver as the UI:
 //
-//   GET /vibex/agent-instructions?mode=<mode> → instruction file metadata
-//   PUT /vibex/agent-instructions?mode=<mode> ← { content } (editable modes only)
+//   GET /cipher/agent-instructions?mode=<mode> → instruction file metadata
+//   PUT /cipher/agent-instructions?mode=<mode> ← { content } (editable modes only)
 //
 // Writes are atomic (temp file + rename) and keep a per-file .bak revision.
 
 import { readFile, writeFile, rename, stat } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 
-const ROUTE = "/vibex/agent-instructions";
+const ROUTE = "/cipher/agent-instructions";
 const MAX_INSTRUCTIONS_BYTES = 64 * 1024;
 const MAX_REQUEST_BYTES = 256 * 1024;
 const INSTRUCTION_MODES = Object.freeze({
 	shared: { file: "AGENTS.md", editable: false },
-	"red-team": { file: "VIBEX-RED-TEAM.md", editable: true },
-	"blue-team": { file: "VIBEX-BLUE-TEAM.md", editable: true },
-	"research-mode": { file: "VIBEX-RESEARCH-MODE.md", editable: true },
+	"red-team": { file: "CIPHER-RED-TEAM.md", editable: true },
+	"blue-team": { file: "CIPHER-BLUE-TEAM.md", editable: true },
+	"research-mode": { file: "CIPHER-RESEARCH-MODE.md", editable: true },
 });
 
 export const inject = ["webServer"];
 
 /**
- * The instructions file vibeX loads: AGENTS.md beside the profile home
+ * The instructions file CIPHER loads: AGENTS.md beside the profile home
  * (the folder that contains .dsh), falling back to the process working
  * directory when the profile home is not pinned by the launcher.
  */
 function instructionsPath() {
-	if (process.env.VIBEX_AGENTS_FILE) return resolve(process.env.VIBEX_AGENTS_FILE);
+	if (process.env.CIPHER_AGENTS_FILE) return resolve(process.env.CIPHER_AGENTS_FILE);
 	if (process.env.DSH_HOME) return join(dirname(resolve(process.env.DSH_HOME)), "AGENTS.md");
 	return join(process.cwd(), "AGENTS.md");
 }
@@ -49,13 +49,13 @@ function connectionOf(ctx) {
 	return ctx.get("connection");
 }
 
-/** Reject requests that did not arrive from an authenticated vibeX window. */
+/** Reject requests that did not arrive from an authenticated CIPHER window. */
 function rejectUntrusted(ctx, req, res) {
 	const connection = connectionOf(ctx);
 	if (connection === undefined || typeof connection.requestRejection !== "function") {
 		// Without the connection fence we cannot prove this request came from
 		// the owner window, so refuse rather than serve file contents.
-		sendJson(res, 503, { error: "vibeX is still starting. Try again in a moment." });
+		sendJson(res, 503, { error: "CIPHER is still starting. Try again in a moment." });
 		return true;
 	}
 	const rejection = connection.requestRejection(req);
@@ -131,7 +131,7 @@ async function writeInstructions(file, content) {
 	if (previous.exists) {
 		await writeFile(`${file}.bak`, previous.content, "utf8");
 	}
-	const temp = `${file}.vibex-${process.pid}.tmp`;
+	const temp = `${file}.cipher-${process.pid}.tmp`;
 	await writeFile(temp, content, "utf8");
 	await rename(temp, file);
 	return describeFile(file, content, true);
@@ -140,8 +140,8 @@ async function writeInstructions(file, content) {
 function messagesFor(error) {
 	const detail = error && typeof error.message === "string" ? error.message : String(error);
 	if (error && error.code === "ENOENT") return "The instructions folder does not exist yet.";
-	if (error && error.code === "EACCES") return "vibeX is not allowed to write that file.";
-	return `vibeX could not save the instructions: ${detail}`;
+	if (error && error.code === "EACCES") return "CIPHER is not allowed to write that file.";
+	return `CIPHER could not save the instructions: ${detail}`;
 }
 
 export function apply(ctx) {
@@ -214,7 +214,7 @@ export function apply(ctx) {
 
 			try {
 				const saved = await writeInstructions(file, body.content);
-				if (ctx.logger !== undefined) ctx.logger.info(`vibex-brand: saved ${mode} instructions (${saved.bytes} bytes)`);
+				if (ctx.logger !== undefined) ctx.logger.info(`cipher-brand: saved ${mode} instructions (${saved.bytes} bytes)`);
 				sendJson(res, 200, { ...saved, mode, editable: true });
 			} catch (error) {
 				sendJson(res, 500, { error: messagesFor(error) });
@@ -222,5 +222,5 @@ export function apply(ctx) {
 		},
 	};
 
-	ctx.effect(() => ctx.webServer.register(route), "vibex-brand: agent instructions route");
+	ctx.effect(() => ctx.webServer.register(route), "cipher-brand: agent instructions route");
 }

@@ -6,7 +6,7 @@ build/
 *.tmp
 npm-debug.log*
 
-# Local credentials, browser state, and vibeX runtime data
+# Local credentials, browser state, and CIPHER runtime data
 .env
 .env.*
 .dsh/.credentials.yaml

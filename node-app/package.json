@@ -1,7 +1,7 @@
 {
-  "name": "vibex-runtime",
+  "name": "cipher-runtime",
   "version": "1.0.0",
-  "description": "vibeX DSH runtime dependencies",
+  "description": "CIPHER DSH runtime dependencies",
   "license": "MIT",
   "type": "commonjs",
   "dependencies": {

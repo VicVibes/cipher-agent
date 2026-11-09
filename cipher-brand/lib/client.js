@@ -1,5 +1,5 @@
 window.__ModuleLoader__.load({
-	id: "vibex-brand",
+	id: "cipher-brand",
 	factory: (require) => {
 		var module = { exports: {} };
 		var exports = module.exports;
@@ -10,9 +10,9 @@ window.__ModuleLoader__.load({
 		var useState = react.useState;
 		var useEffect = react.useEffect;
 
-		var CSS_ID = "vibex-brand-styles";
-		var VIBEX_ICON_DATA = "data:image/svg+xml," + encodeURIComponent(
-			'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.6 20.4 7.3v9.4L12 21.4 3.6 16.7V7.3L12 2.6Z" fill="none" stroke="#22d3ee" stroke-width="1.3" stroke-linejoin="round"/><path d="m8.2 8.2 7.6 7.6m0-7.6-7.6 7.6" fill="none" stroke="#e6f9ff" stroke-width="1.7" stroke-linecap="round"/></svg>'
+		var CSS_ID = "cipher-brand-styles";
+		var CIPHER_ICON_DATA = "data:image/svg+xml," + encodeURIComponent(
+			'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.6 20.4 7.3v9.4L12 21.4 3.6 16.7V7.3L12 2.6Z" fill="none" stroke="#22d3ee" stroke-width="1.3" stroke-linejoin="round"/><path d="M15.4 9.2a4.1 4.1 0 1 0 0 5.6" fill="none" stroke="#e6f9ff" stroke-width="1.7" stroke-linecap="round"/></svg>'
 		);
 		var CSS = [
 			// Cyber typography: Cascadia Code ships on Windows 11; Kali falls back
@@ -22,67 +22,67 @@ window.__ModuleLoader__.load({
 			"[data-chat-running]{--dsw-alias-label-deep-diving:#22d3ee;--dsw-alias-label-deep-diving-shimmer:#67e8f9;color:#22d3ee}",
 			"[data-chat-running] span[aria-hidden='true']:has(svg){display:inline-flex!important;align-items:center;justify-content:center}",
 			"[data-chat-running] span[aria-hidden='true']:has(svg)>*{display:none!important}",
-			"[data-chat-running] span[aria-hidden='true']:has(svg)::before{content:'X';box-sizing:border-box;width:14px;height:14px;border:1px solid currentColor;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;line-height:1}",
-			"[class*='_brandMark']:not(:has([data-vibex-brand-mark]))>svg,[class*='_railMark']:not(:has([data-vibex-brand-mark]))>svg,[class*='_fishHitbox']:not(:has([data-vibex-brand-mark]))>svg{display:none!important}",
-			"[class*='_brandMark']:not(:has([data-vibex-brand-mark]))::after,[class*='_railMark']:not(:has([data-vibex-brand-mark]))::after,[class*='_fishHitbox']:not(:has([data-vibex-brand-mark]))::after{content:'X';box-sizing:border-box;width:24px;height:24px;border:1px solid #22d3ee;border-radius:7px;color:#22d3ee;display:inline-flex;align-items:center;justify-content:center;font:700 12px/1 ui-monospace,Consolas,monospace}",
-			".vibex-brand-name{font-family:var(--ds-font-family-code,ui-monospace,SFMono-Regular,Consolas,monospace);font-size:15px;font-weight:700;letter-spacing:.18em;white-space:nowrap}",
-			".vibex-setup{display:flex;align-items:center;gap:7px;width:100%;min-width:0;min-height:32px;margin:0 0 2px;padding:6px 10px;border:0;border-radius:var(--dsw-radius-md,8px);background:transparent;color:var(--dsw-alias-label-secondary,inherit);font:inherit;font-size:13px;line-height:20px;text-align:left;cursor:pointer}",
-			".vibex-setup:hover{background-color:var(--dsw-alias-interactive-bg-hover,rgba(127,127,127,.12))}",
-			".vibex-setup-rail{justify-content:center;width:32px;height:32px;padding:0;margin:0 auto 2px}",
-			".vibex-setup-glyph{flex:none;display:inline-flex;align-items:center;justify-content:center;color:#22d3ee}",
-			".vibex-overlay{position:fixed;inset:0;z-index:2147483000;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:24px}",
-			".vibex-card{width:min(580px,100%);max-height:calc(100vh - 48px);overflow:auto;border-radius:14px;background:var(--dsw-alias-bg-modal,#16181d);color:var(--dsw-alias-label-primary,#e8eaed);box-shadow:0 24px 64px rgba(0,0,0,.5);border:1px solid rgba(127,127,127,.28);padding:22px 24px;font-size:14px;line-height:1.55}",
-			".vibex-card h2{margin:0 0 2px;font-size:18px;letter-spacing:.02em}",
-			".vibex-card p{margin:8px 0}",
-			".vibex-card ol{margin:10px 0 6px;padding-left:20px}",
-			".vibex-card li{margin:4px 0}",
-			".vibex-kv{display:grid;grid-template-columns:118px 1fr;gap:6px 12px;margin:12px 0;font-size:13px}",
-			".vibex-card code{font-family:ui-monospace,Consolas,monospace;font-size:12.5px;background:rgba(127,127,127,.16);padding:1px 5px;border-radius:4px;word-break:break-all}",
-			".vibex-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}",
-			".vibex-btn{border:1px solid rgba(127,127,127,.35);border-radius:8px;background:transparent;color:inherit;font:inherit;font-size:13px;padding:8px 14px;cursor:pointer}",
-			".vibex-btn:hover{background:rgba(127,127,127,.14)}",
-			".vibex-btn-primary{background:#22d3ee;border-color:#22d3ee;color:#06121a;font-weight:600}",
-			".vibex-btn-primary:hover{background:#67e8f9}",
-			".vibex-hint{margin:0;font-size:12.5px;opacity:.75}",
-			".vibex-tabs{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0 10px}",
-			".vibex-tab{border:1px solid rgba(127,127,127,.35);border-radius:999px;background:transparent;color:inherit;font:inherit;font-size:12.5px;padding:5px 12px;cursor:pointer}",
-			".vibex-tab:hover{background:rgba(127,127,127,.14)}",
-			".vibex-tab[aria-pressed='true']{border-color:#22d3ee;color:#22d3ee;background:rgba(34,211,238,.1)}",
-			".vibex-provider{border:1px solid rgba(127,127,127,.22);border-radius:10px;padding:10px 13px;margin:0 0 8px}",
-			".vibex-provider h3{margin:0 0 4px;font-size:14px;letter-spacing:.02em}",
-			".vibex-provider p{margin:4px 0}",
-			".vibex-settings{max-width:640px;padding:4px 2px;font-size:13.5px;line-height:1.55}",
-			".vibex-settings h2{margin:0 0 6px;font-size:16px}",
-			".vibex-settings h3{margin:18px 0 4px;font-size:13.5px;letter-spacing:.04em;text-transform:uppercase;opacity:.8}",
-			".vibex-settings p{margin:4px 0}",
-			".vibex-pill{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:999px;background:rgba(34,211,238,.14);color:#22d3ee;font-size:11px;letter-spacing:.06em;text-transform:uppercase}",
-			".vibex-settings .vibex-btn{margin-top:8px}",
-			".vibex-field{display:flex;flex-direction:column;gap:5px;margin:12px 0 0}",
-			".vibex-label{font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;opacity:.7}",
-			".vibex-input{box-sizing:border-box;width:100%;height:34px;padding:0 10px;border:1px solid rgba(127,127,127,.4);border-radius:8px;background:rgba(127,127,127,.08);color:inherit;font:inherit;font-size:13px}",
-			".vibex-input:focus{outline:none;border-color:#22d3ee;box-shadow:0 0 0 2px rgba(34,211,238,.18)}",
-			".vibex-input::placeholder{opacity:.45}",
-			"select.vibex-input{cursor:pointer}",
-			".vibex-key-row{display:flex;gap:8px;align-items:center}",
-			".vibex-key-row .vibex-input{flex:1;min-width:0}",
-			".vibex-toggle{border:1px solid rgba(127,127,127,.4);border-radius:8px;background:transparent;color:inherit;font:inherit;font-size:12px;height:34px;padding:0 10px;cursor:pointer}",
-			".vibex-toggle:hover{background:rgba(127,127,127,.14)}",
-			".vibex-row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}",
-			".vibex-field-head{display:flex;align-items:center;justify-content:space-between;gap:10px}",
-			".vibex-field-actions{display:inline-flex;align-items:center;gap:10px;flex:none}",
-			".vibex-link{border:0;background:transparent;color:#22d3ee;font:inherit;font-size:12px;padding:2px 0;cursor:pointer}",
-			".vibex-link:hover{text-decoration:underline}",
-			".vibex-link:disabled{opacity:.5;cursor:default;text-decoration:none}",
-			".vibex-error{margin:10px 0 0;color:#f87171;font-size:12.5px}",
-			".vibex-ok{margin:10px 0 2px;color:#34d399;font-size:13px;font-weight:600}",
-			".vibex-editor{box-sizing:border-box;width:100%;min-height:300px;margin:8px 0 0;padding:12px 14px;border:1px solid rgba(127,127,127,.4);border-radius:10px;background:rgba(0,0,0,.22);color:inherit;font-family:'Cascadia Code','JetBrains Mono','Fira Code',Consolas,monospace;font-size:12.5px;line-height:1.6;resize:vertical;tab-size:2}",
-			".vibex-editor:focus{outline:none;border-color:#22d3ee;box-shadow:0 0 0 2px rgba(34,211,238,.18)}",
-			".vibex-meta{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;margin:6px 0 0;font-size:12px;opacity:.72}",
-			".vibex-meta code{font-size:11.5px}",
-			".vibex-editor-actions{display:flex;gap:10px;align-items:center;margin-top:10px}",
-			".vibex-dirty{margin-left:auto;color:#fbbf24;font-size:12px}",
-			".vibex-success{padding:2px 0 0}",
-			".vibex-btn:disabled,.vibex-tab:disabled{opacity:.5;cursor:default}",
+			"[data-chat-running] span[aria-hidden='true']:has(svg)::before{content:'C';box-sizing:border-box;width:14px;height:14px;border:1px solid currentColor;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;line-height:1}",
+			"[class*='_brandMark']:not(:has([data-cipher-brand-mark]))>svg,[class*='_railMark']:not(:has([data-cipher-brand-mark]))>svg,[class*='_fishHitbox']:not(:has([data-cipher-brand-mark]))>svg{display:none!important}",
+			"[class*='_brandMark']:not(:has([data-cipher-brand-mark]))::after,[class*='_railMark']:not(:has([data-cipher-brand-mark]))::after,[class*='_fishHitbox']:not(:has([data-cipher-brand-mark]))::after{content:'C';box-sizing:border-box;width:24px;height:24px;border:1px solid #22d3ee;border-radius:7px;color:#22d3ee;display:inline-flex;align-items:center;justify-content:center;font:700 12px/1 ui-monospace,Consolas,monospace}",
+			".cipher-brand-name{font-family:var(--ds-font-family-code,ui-monospace,SFMono-Regular,Consolas,monospace);font-size:15px;font-weight:700;letter-spacing:.18em;white-space:nowrap}",
+			".cipher-setup{display:flex;align-items:center;gap:7px;width:100%;min-width:0;min-height:32px;margin:0 0 2px;padding:6px 10px;border:0;border-radius:var(--dsw-radius-md,8px);background:transparent;color:var(--dsw-alias-label-secondary,inherit);font:inherit;font-size:13px;line-height:20px;text-align:left;cursor:pointer}",
+			".cipher-setup:hover{background-color:var(--dsw-alias-interactive-bg-hover,rgba(127,127,127,.12))}",
+			".cipher-setup-rail{justify-content:center;width:32px;height:32px;padding:0;margin:0 auto 2px}",
+			".cipher-setup-glyph{flex:none;display:inline-flex;align-items:center;justify-content:center;color:#22d3ee}",
+			".cipher-overlay{position:fixed;inset:0;z-index:2147483000;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:24px}",
+			".cipher-card{width:min(580px,100%);max-height:calc(100vh - 48px);overflow:auto;border-radius:14px;background:var(--dsw-alias-bg-modal,#16181d);color:var(--dsw-alias-label-primary,#e8eaed);box-shadow:0 24px 64px rgba(0,0,0,.5);border:1px solid rgba(127,127,127,.28);padding:22px 24px;font-size:14px;line-height:1.55}",
+			".cipher-card h2{margin:0 0 2px;font-size:18px;letter-spacing:.02em}",
+			".cipher-card p{margin:8px 0}",
+			".cipher-card ol{margin:10px 0 6px;padding-left:20px}",
+			".cipher-card li{margin:4px 0}",
+			".cipher-kv{display:grid;grid-template-columns:118px 1fr;gap:6px 12px;margin:12px 0;font-size:13px}",
+			".cipher-card code{font-family:ui-monospace,Consolas,monospace;font-size:12.5px;background:rgba(127,127,127,.16);padding:1px 5px;border-radius:4px;word-break:break-all}",
+			".cipher-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}",
+			".cipher-btn{border:1px solid rgba(127,127,127,.35);border-radius:8px;background:transparent;color:inherit;font:inherit;font-size:13px;padding:8px 14px;cursor:pointer}",
+			".cipher-btn:hover{background:rgba(127,127,127,.14)}",
+			".cipher-btn-primary{background:#22d3ee;border-color:#22d3ee;color:#06121a;font-weight:600}",
+			".cipher-btn-primary:hover{background:#67e8f9}",
+			".cipher-hint{margin:0;font-size:12.5px;opacity:.75}",
+			".cipher-tabs{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0 10px}",
+			".cipher-tab{border:1px solid rgba(127,127,127,.35);border-radius:999px;background:transparent;color:inherit;font:inherit;font-size:12.5px;padding:5px 12px;cursor:pointer}",
+			".cipher-tab:hover{background:rgba(127,127,127,.14)}",
+			".cipher-tab[aria-pressed='true']{border-color:#22d3ee;color:#22d3ee;background:rgba(34,211,238,.1)}",
+			".cipher-provider{border:1px solid rgba(127,127,127,.22);border-radius:10px;padding:10px 13px;margin:0 0 8px}",
+			".cipher-provider h3{margin:0 0 4px;font-size:14px;letter-spacing:.02em}",
+			".cipher-provider p{margin:4px 0}",
+			".cipher-settings{max-width:640px;padding:4px 2px;font-size:13.5px;line-height:1.55}",
+			".cipher-settings h2{margin:0 0 6px;font-size:16px}",
+			".cipher-settings h3{margin:18px 0 4px;font-size:13.5px;letter-spacing:.04em;text-transform:uppercase;opacity:.8}",
+			".cipher-settings p{margin:4px 0}",
+			".cipher-pill{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:999px;background:rgba(34,211,238,.14);color:#22d3ee;font-size:11px;letter-spacing:.06em;text-transform:uppercase}",
+			".cipher-settings .cipher-btn{margin-top:8px}",
+			".cipher-field{display:flex;flex-direction:column;gap:5px;margin:12px 0 0}",
+			".cipher-label{font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;opacity:.7}",
+			".cipher-input{box-sizing:border-box;width:100%;height:34px;padding:0 10px;border:1px solid rgba(127,127,127,.4);border-radius:8px;background:rgba(127,127,127,.08);color:inherit;font:inherit;font-size:13px}",
+			".cipher-input:focus{outline:none;border-color:#22d3ee;box-shadow:0 0 0 2px rgba(34,211,238,.18)}",
+			".cipher-input::placeholder{opacity:.45}",
+			"select.cipher-input{cursor:pointer}",
+			".cipher-key-row{display:flex;gap:8px;align-items:center}",
+			".cipher-key-row .cipher-input{flex:1;min-width:0}",
+			".cipher-toggle{border:1px solid rgba(127,127,127,.4);border-radius:8px;background:transparent;color:inherit;font:inherit;font-size:12px;height:34px;padding:0 10px;cursor:pointer}",
+			".cipher-toggle:hover{background:rgba(127,127,127,.14)}",
+			".cipher-row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}",
+			".cipher-field-head{display:flex;align-items:center;justify-content:space-between;gap:10px}",
+			".cipher-field-actions{display:inline-flex;align-items:center;gap:10px;flex:none}",
+			".cipher-link{border:0;background:transparent;color:#22d3ee;font:inherit;font-size:12px;padding:2px 0;cursor:pointer}",
+			".cipher-link:hover{text-decoration:underline}",
+			".cipher-link:disabled{opacity:.5;cursor:default;text-decoration:none}",
+			".cipher-error{margin:10px 0 0;color:#f87171;font-size:12.5px}",
+			".cipher-ok{margin:10px 0 2px;color:#34d399;font-size:13px;font-weight:600}",
+			".cipher-editor{box-sizing:border-box;width:100%;min-height:300px;margin:8px 0 0;padding:12px 14px;border:1px solid rgba(127,127,127,.4);border-radius:10px;background:rgba(0,0,0,.22);color:inherit;font-family:'Cascadia Code','JetBrains Mono','Fira Code',Consolas,monospace;font-size:12.5px;line-height:1.6;resize:vertical;tab-size:2}",
+			".cipher-editor:focus{outline:none;border-color:#22d3ee;box-shadow:0 0 0 2px rgba(34,211,238,.18)}",
+			".cipher-meta{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;margin:6px 0 0;font-size:12px;opacity:.72}",
+			".cipher-meta code{font-size:11.5px}",
+			".cipher-editor-actions{display:flex;gap:10px;align-items:center;margin-top:10px}",
+			".cipher-dirty{margin-left:auto;color:#fbbf24;font-size:12px}",
+			".cipher-success{padding:2px 0 0}",
+			".cipher-btn:disabled,.cipher-tab:disabled{opacity:.5;cursor:default}",
 		].join("\n");
 
 		function installStyles() {
@@ -100,11 +100,11 @@ window.__ModuleLoader__.load({
 
 		function ownTitle() {
 			if (typeof document === "undefined") return;
-			if (document.title !== "vibeX") document.title = "vibeX";
+			if (document.title !== "CIPHER") document.title = "CIPHER";
 			var icons = document.querySelectorAll('link[rel~="icon"]');
 			for (var index = 0; index < icons.length; index++) {
 				var icon = icons[index];
-				if (icon.getAttribute("href") !== VIBEX_ICON_DATA) icon.setAttribute("href", VIBEX_ICON_DATA);
+				if (icon.getAttribute("href") !== CIPHER_ICON_DATA) icon.setAttribute("href", CIPHER_ICON_DATA);
 				if (icon.getAttribute("type") !== "image/svg+xml") icon.setAttribute("type", "image/svg+xml");
 			}
 		}
@@ -119,20 +119,20 @@ window.__ModuleLoader__.load({
 			["Sign in to your DeepSeek account or add an API Key to get started.", "Add a model provider key to get started."],
 			["Model unavailable. Please sign in and try again.", "Model unavailable. Check your model provider configuration and try again."],
 			["Env var not detected. Enter an API key, or configure DEEPSEEK_API_KEY in your env.", "Enter an API key for this provider, or set it in the server environment."],
-			["deepseek-official", "vibex-default"],
+			["deepseek-official", "cipher-default"],
 			["Configure the official DeepSeek provider to start building.", "Add an OpenAI-compatible model provider to start building."],
-			["DeepSeek Harness", "vibeX"],
-			["restart Harness", "restart vibeX"],
-			["Restart Harness", "Restart vibeX"],
-			["restart the Harness", "restart vibeX"],
-			["upgrade Harness", "upgrade vibeX"],
-			["Upgrade Harness", "Upgrade vibeX"],
-			["DeepSeek Account", "vibeX Account"],
-			["DeepSeek account", "vibeX account"],
-			["Connected to DeepSeek", "Connected to vibeX"],
-			["Sign in to DeepSeek", "Sign in to vibeX"],
+			["DeepSeek Harness", "CIPHER"],
+			["restart Harness", "restart CIPHER"],
+			["Restart Harness", "Restart CIPHER"],
+			["restart the Harness", "restart CIPHER"],
+			["upgrade Harness", "upgrade CIPHER"],
+			["Upgrade Harness", "Upgrade CIPHER"],
+			["DeepSeek Account", "CIPHER Account"],
+			["DeepSeek account", "CIPHER account"],
+			["Connected to DeepSeek", "Connected to CIPHER"],
+			["Sign in to DeepSeek", "Sign in to CIPHER"],
 			["official DeepSeek provider", "a model provider"],
-			["Help improve DeepSeek models and products.", "Help improve vibeX."],
+			["Help improve DeepSeek models and products.", "Help improve CIPHER."],
 			["using the official model API", "using a model API"],
 		];
 
@@ -142,7 +142,7 @@ window.__ModuleLoader__.load({
 				var phrase = BRAND_PHRASES[index][0];
 				if (next.indexOf(phrase) !== -1) next = next.split(phrase).join(BRAND_PHRASES[index][1]);
 			}
-			next = next.replace(/\bDeepSeek(?:\s+Harness)?\b/gi, "vibeX").replace(/\bHarness\b/gi, "vibeX");
+			next = next.replace(/\bDeepSeek(?:\s+Harness)?\b/gi, "CIPHER").replace(/\bHarness\b/gi, "CIPHER");
 			return next;
 		}
 
@@ -179,7 +179,7 @@ window.__ModuleLoader__.load({
 				while ((node = walker.nextNode())) {
 					var text = node.nodeValue;
 					if (!text || !/^Deep diving(?= for |$)/.test(text)) continue;
-					node.nodeValue = text.replace(/^Deep diving(?= for |$)/, "vibeX is thinking");
+					node.nodeValue = text.replace(/^Deep diving(?= for |$)/, "CIPHER is thinking");
 				}
 			}
 		}
@@ -217,22 +217,22 @@ window.__ModuleLoader__.load({
 			scrubRunningStatus(root);
 		}
 
-		// vibeX uses provider API keys, not a DeepSeek account. Hide the stock
+		// CIPHER uses provider API keys, not a DeepSeek account. Hide the stock
 		// account prompt before its branding or sign-in controls can be shown.
 		function hideNativeOnboarding() {
 			if (typeof document === "undefined") return;
 			var dialogs = document.querySelectorAll('[role="dialog"],dialog');
 			for (var index = 0; index < dialogs.length; index++) {
 				var dialog = dialogs[index];
-				if (dialog.getAttribute("data-vibex-hidden") === "account") continue;
+				if (dialog.getAttribute("data-cipher-hidden") === "account") continue;
 				var text = (dialog.textContent || "").replace(/\s+/g, " ");
 				var stockBrand = /\bDeepSeek(?:\s+Harness)?\b/i.test(text);
-				var rewrittenAccountPrompt = /\bvibeX(?:\s+Harness)?\b/i.test(text) &&
+				var rewrittenAccountPrompt = /\bCIPHER(?:\s+Harness)?\b/i.test(text) &&
 					/\b(?:sign[\s-]?in|log[\s-]?in|welcome to|get started)\b/i.test(text);
 				if (!stockBrand && !rewrittenAccountPrompt) continue;
 				if (!/\b(?:sign[\s-]?in|log[\s-]?in|account|API\s*key|welcome to|get started)\b/i.test(text)) continue;
 				var wrapper = dialog.closest('[role="presentation"]') || dialog;
-				wrapper.setAttribute("data-vibex-hidden", "account");
+				wrapper.setAttribute("data-cipher-hidden", "account");
 				wrapper.style.setProperty("display", "none", "important");
 			}
 		}
@@ -284,7 +284,7 @@ window.__ModuleLoader__.load({
 			return observer;
 		}
 
-		function VibexMark(props) {
+		function CipherMark(props) {
 			var size = props && props.size ? props.size : 24;
 			return h(
 				"svg",
@@ -294,7 +294,7 @@ window.__ModuleLoader__.load({
 					viewBox: "0 0 24 24",
 					fill: "none",
 					className: props && props.className ? props.className : undefined,
-					"data-vibex-brand-mark": "true",
+					"data-cipher-brand-mark": "true",
 					"aria-hidden": "true",
 					focusable: "false",
 				},
@@ -305,7 +305,7 @@ window.__ModuleLoader__.load({
 					strokeLinejoin: "round",
 				}),
 				h("path", {
-					d: "m8.2 8.2 7.6 7.6m0-7.6-7.6 7.6",
+					d: "M15.4 9.2a4.1 4.1 0 1 0 0 5.6",
 					stroke: "#22d3ee",
 					strokeWidth: 1.7,
 					strokeLinecap: "round",
@@ -313,12 +313,12 @@ window.__ModuleLoader__.load({
 			);
 		}
 
-		function VibexName() {
-			return h("span", { className: "vibex-brand-name" }, "vibeX");
+		function CipherName() {
+			return h("span", { className: "cipher-brand-name" }, "CIPHER");
 		}
 
 		function HeroMark(props) {
-			return h(VibexMark, {
+			return h(CipherMark, {
 				size: props && props.size ? props.size : 34,
 				className: props && props.className ? props.className : undefined,
 			});
@@ -411,7 +411,7 @@ window.__ModuleLoader__.load({
 			try {
 				return window.crypto.randomUUID();
 			} catch (error) {
-				return "vibex-" + Date.now() + "-" + Math.random().toString(16).slice(2);
+				return "cipher-" + Date.now() + "-" + Math.random().toString(16).slice(2);
 			}
 		}
 
@@ -428,14 +428,14 @@ window.__ModuleLoader__.load({
 					}),
 				})
 				.then(function (response) {
-					if (!response.ok) throw new Error("vibeX server returned HTTP " + response.status + ".");
+					if (!response.ok) throw new Error("CIPHER server returned HTTP " + response.status + ".");
 					return response.json();
 				})
 				.then(function (message) {
-					if (!message || !message.result) throw new Error("vibeX did not answer. Try again.");
+					if (!message || !message.result) throw new Error("CIPHER did not answer. Try again.");
 					if (!message.result.ok) {
 						var detail = message.result.error || {};
-						var failure = new Error(detail.message || "vibeX refused the request.");
+						var failure = new Error(detail.message || "CIPHER refused the request.");
 						failure.code = detail.code;
 						throw failure;
 					}
@@ -639,7 +639,7 @@ window.__ModuleLoader__.load({
 						if (error && error.code === "settings/rejected" && /writer lock/i.test(message)) {
 							message = "Another settings write is in progress. Wait a moment and try again.";
 						} else if (error && error.code === "settings/rejected") {
-							message = "vibeX refused the settings write: " + message;
+							message = "CIPHER refused the settings write: " + message;
 						}
 						failureState[1](message);
 					})
@@ -652,7 +652,7 @@ window.__ModuleLoader__.load({
 				h(
 					"div",
 					{
-						className: "vibex-overlay",
+						className: "cipher-overlay",
 						role: "presentation",
 						onMouseDown: function (event) {
 							if (event.target === event.currentTarget) onClose();
@@ -661,10 +661,10 @@ window.__ModuleLoader__.load({
 					h(
 						"div",
 						{
-							className: "vibex-card",
+							className: "cipher-card",
 							role: "dialog",
 							"aria-modal": "true",
-							"aria-label": "Connect a model to vibeX",
+							"aria-label": "Connect a model to CIPHER",
 							onKeyDown: function (event) {
 								if (event.key === "Enter" && event.target && event.target.tagName === "INPUT") {
 									event.preventDefault();
@@ -672,28 +672,28 @@ window.__ModuleLoader__.load({
 								}
 							},
 						},
-						h("h2", null, "Connect a model to vibeX"),
+						h("h2", null, "Connect a model to CIPHER"),
 						h(
 							"p",
 							null,
 							connected
 								? "Saved. New sessions start on this model."
-								: "Enter the key here. vibeX stores it locally and makes it the default for new sessions."
+								: "Enter the key here. CIPHER stores it locally and makes it the default for new sessions."
 						),
 						connected
 							? h(
 									"div",
-									{ className: "vibex-success" },
-									h("p", { className: "vibex-ok" }, "Connected to " + connected.name + " · " + connected.model + "."),
-									h("p", { className: "vibex-hint" }, "The key is stored in .dsh/.credentials.yaml on this machine."),
+									{ className: "cipher-success" },
+									h("p", { className: "cipher-ok" }, "Connected to " + connected.name + " · " + connected.model + "."),
+									h("p", { className: "cipher-hint" }, "The key is stored in .dsh/.credentials.yaml on this machine."),
 									h(
 										"div",
-										{ className: "vibex-actions" },
+										{ className: "cipher-actions" },
 										h(
 											"button",
 											{
 												type: "button",
-												className: "vibex-btn vibex-btn-primary",
+												className: "cipher-btn cipher-btn-primary",
 												onClick: function () {
 													onClose();
 													window.setTimeout(function () { window.location.reload(); }, 150);
@@ -706,7 +706,7 @@ window.__ModuleLoader__.load({
 							: [
 									h(
 										"div",
-										{ className: "vibex-tabs", role: "tablist", "aria-label": "Model providers" },
+										{ className: "cipher-tabs", role: "tablist", "aria-label": "Model providers" },
 										MODEL_OPTIONS.map(function (entry) {
 											return h(
 												"button",
@@ -714,7 +714,7 @@ window.__ModuleLoader__.load({
 													key: entry.id,
 													type: "button",
 													role: "tab",
-													className: "vibex-tab",
+													className: "cipher-tab",
 													"aria-pressed": entry.id === active ? "true" : "false",
 													disabled: busy,
 													onClick: function () { switchTab(entry.id); },
@@ -725,18 +725,18 @@ window.__ModuleLoader__.load({
 									),
 									h(
 										"div",
-										{ className: "vibex-provider", role: "tabpanel" },
-										h("h3", null, option.label, h("span", { className: "vibex-pill" }, option.hint)),
+										{ className: "cipher-provider", role: "tabpanel" },
+										h("h3", null, option.label, h("span", { className: "cipher-pill" }, option.hint)),
 										active === "custom"
 											? h(
 													"div",
-													{ className: "vibex-row2" },
+													{ className: "cipher-row2" },
 													h(
 														"label",
-														{ className: "vibex-field" },
-														h("span", { className: "vibex-label" }, "Provider id"),
+														{ className: "cipher-field" },
+														h("span", { className: "cipher-label" }, "Provider id"),
 														h("input", {
-															className: "vibex-input",
+															className: "cipher-input",
 															type: "text",
 															value: customRoute,
 															placeholder: "local-ai",
@@ -747,12 +747,12 @@ window.__ModuleLoader__.load({
 													),
 													h(
 														"label",
-														{ className: "vibex-field" },
-														h("span", { className: "vibex-label" }, "Protocol"),
+														{ className: "cipher-field" },
+														h("span", { className: "cipher-label" }, "Protocol"),
 														h(
 															"select",
 															{
-																className: "vibex-input",
+																className: "cipher-input",
 																value: customApi,
 																onChange: function (event) { apiState[1](event.target.value); },
 															},
@@ -766,10 +766,10 @@ window.__ModuleLoader__.load({
 										active === "custom"
 											? h(
 													"label",
-													{ className: "vibex-field" },
-													h("span", { className: "vibex-label" }, "Base URL"),
+													{ className: "cipher-field" },
+													h("span", { className: "cipher-label" }, "Base URL"),
 													h("input", {
-														className: "vibex-input",
+														className: "cipher-input",
 														type: "text",
 														value: customBase,
 														placeholder: "https://example.com/v1",
@@ -780,17 +780,17 @@ window.__ModuleLoader__.load({
 												)
 											: h(
 													"p",
-													{ className: "vibex-hint" },
+													{ className: "cipher-hint" },
 													"Endpoint: ",
 													h("code", null, option.baseURL)
 												),
 										active === "custom"
 											? h(
 													"label",
-													{ className: "vibex-field" },
-													h("span", { className: "vibex-label" }, "Display name (optional)"),
+													{ className: "cipher-field" },
+													h("span", { className: "cipher-label" }, "Display name (optional)"),
 													h("input", {
-														className: "vibex-input",
+														className: "cipher-input",
 														type: "text",
 														value: customName,
 														placeholder: "Local AI",
@@ -801,13 +801,13 @@ window.__ModuleLoader__.load({
 											: null,
 										h(
 											"label",
-											{ className: "vibex-field" },
-											h("span", { className: "vibex-label" }, active === "custom" ? "API key (optional)" : "API key"),
+											{ className: "cipher-field" },
+											h("span", { className: "cipher-label" }, active === "custom" ? "API key (optional)" : "API key"),
 											h(
 												"div",
-												{ className: "vibex-key-row" },
+												{ className: "cipher-key-row" },
 												h("input", {
-													className: "vibex-input",
+													className: "cipher-input",
 													type: showState[0] ? "text" : "password",
 													value: apiKey,
 													placeholder: active === "openrouter" ? "sk-or-v1-..." : "paste your key",
@@ -819,7 +819,7 @@ window.__ModuleLoader__.load({
 													"button",
 													{
 														type: "button",
-														className: "vibex-toggle",
+														className: "cipher-toggle",
 														onClick: function () { showState[1](!showState[0]); },
 													},
 													showState[0] ? "Hide" : "Show"
@@ -828,20 +828,20 @@ window.__ModuleLoader__.load({
 										),
 										h(
 											"div",
-											{ className: "vibex-field" },
+											{ className: "cipher-field" },
 											h(
 												"div",
-												{ className: "vibex-field-head" },
-												h("span", { className: "vibex-label" }, "Model id"),
+												{ className: "cipher-field-head" },
+												h("span", { className: "cipher-label" }, "Model id"),
 												h(
 													"span",
-													{ className: "vibex-field-actions" },
+													{ className: "cipher-field-actions" },
 													candidates.length > 0
 														? h(
 																"button",
 																{
 																	type: "button",
-																	className: "vibex-link",
+																	className: "cipher-link",
 																	onClick: function () { manualState[1](!manualState[0]); },
 																},
 																manual ? "Use list" : "Type manually"
@@ -851,7 +851,7 @@ window.__ModuleLoader__.load({
 														"button",
 														{
 															type: "button",
-															className: "vibex-link",
+															className: "cipher-link",
 															disabled: fetching || busy,
 															onClick: fetchModels,
 														},
@@ -863,7 +863,7 @@ window.__ModuleLoader__.load({
 												? h(
 														"select",
 														{
-															className: "vibex-input",
+															className: "cipher-input",
 															value: modelId,
 															onChange: function (event) { modelState[1](event.target.value); },
 														},
@@ -877,7 +877,7 @@ window.__ModuleLoader__.load({
 														})
 													)
 												: h("input", {
-														className: "vibex-input",
+														className: "cipher-input",
 														type: "text",
 														value: modelId,
 														placeholder: option.modelPlaceholder,
@@ -886,22 +886,22 @@ window.__ModuleLoader__.load({
 														onChange: function (event) { modelState[1](event.target.value); },
 													})
 										),
-										h("p", { className: "vibex-hint" }, option.modelHint)
+										h("p", { className: "cipher-hint" }, option.modelHint)
 									),
-									failure ? h("p", { className: "vibex-error" }, failure) : null,
+									failure ? h("p", { className: "cipher-error" }, failure) : null,
 									h(
 										"div",
-										{ className: "vibex-actions" },
+										{ className: "cipher-actions" },
 										h(
 											"button",
-											{ type: "button", className: "vibex-btn", disabled: busy, onClick: onClose },
+											{ type: "button", className: "cipher-btn", disabled: busy, onClick: onClose },
 											"Cancel"
 										),
 										h(
 											"button",
 											{
 												type: "button",
-												className: "vibex-btn vibex-btn-primary",
+												className: "cipher-btn cipher-btn-primary",
 												disabled: busy,
 												onClick: connect,
 											},
@@ -935,16 +935,16 @@ window.__ModuleLoader__.load({
 					"button",
 					{
 						type: "button",
-						className: wide ? "vibex-setup" : "vibex-setup vibex-setup-rail",
-						title: "Connect a model to vibeX",
-						"aria-label": "Connect a model to vibeX",
+						className: wide ? "cipher-setup" : "cipher-setup cipher-setup-rail",
+						title: "Connect a model to CIPHER",
+						"aria-label": "Connect a model to CIPHER",
 						onClick: function () {
 							open[1](true);
 						},
 					},
 					h(
 						"span",
-						{ className: "vibex-setup-glyph" },
+						{ className: "cipher-setup-glyph" },
 						h(
 							"svg",
 							{ width: 16, height: 16, viewBox: "0 0 24 24", fill: "none", "aria-hidden": "true" },
@@ -978,7 +978,7 @@ window.__ModuleLoader__.load({
 				h(
 					"div",
 					{
-						className: "vibex-overlay",
+						className: "cipher-overlay",
 						role: "presentation",
 						onMouseDown: function (event) {
 							if (event.target === event.currentTarget) onClose();
@@ -987,20 +987,20 @@ window.__ModuleLoader__.load({
 					h(
 						"div",
 						{
-							className: "vibex-card",
+							className: "cipher-card",
 							role: "dialog",
 							"aria-modal": "true",
-							"aria-label": "vibeX cyber toolkit",
+							"aria-label": "CIPHER cyber toolkit",
 						},
-						h("h2", null, "vibeX cyber toolkit"),
+						h("h2", null, "CIPHER cyber toolkit"),
 						h(
 							"p",
 							null,
-							"Security focus areas for authorized work. vibeX defaults to defensive analysis and asks before any active test."
+							"Security focus areas for authorized work. CIPHER defaults to defensive analysis and asks before any active test."
 						),
 						h(
 							"div",
-							{ className: "vibex-provider" },
+							{ className: "cipher-provider" },
 							CYBER_PACKS.map(function (pack) {
 								return h(
 									"p",
@@ -1023,21 +1023,21 @@ window.__ModuleLoader__.load({
 						h(
 							"p",
 							null,
-							"Settings → General → Permission → Admin (full access) removes sandbox limits and approval prompts after vibeX asks you to confirm. For OS-level administrator rights, close vibeX and launch vibeX-ADMIN.bat (Windows) or sudo ./vibex-admin.sh (Kali)."
+							"Settings → General → Permission → Admin (full access) removes sandbox limits and approval prompts after CIPHER asks you to confirm. For OS-level administrator rights, close CIPHER and launch CIPHER-ADMIN.bat (Windows) or sudo ./cipher-admin.sh (Kali)."
 						),
 						h(
 							"div",
-							{ className: "vibex-actions" },
+							{ className: "cipher-actions" },
 							h(
 								"button",
-								{ type: "button", className: "vibex-btn", onClick: onClose },
+								{ type: "button", className: "cipher-btn", onClick: onClose },
 								"Close"
 							),
 							h(
 								"button",
 								{
 									type: "button",
-									className: "vibex-btn vibex-btn-primary",
+									className: "cipher-btn cipher-btn-primary",
 									onClick: function () {
 										onClose();
 										window.setTimeout(function () { openSettingsSection("General"); }, 80);
@@ -1072,14 +1072,14 @@ window.__ModuleLoader__.load({
 					"button",
 					{
 						type: "button",
-						className: wide ? "vibex-setup" : "vibex-setup vibex-setup-rail",
-						title: "vibeX cyber toolkit",
-						"aria-label": "vibeX cyber toolkit",
+						className: wide ? "cipher-setup" : "cipher-setup cipher-setup-rail",
+						title: "CIPHER cyber toolkit",
+						"aria-label": "CIPHER cyber toolkit",
 						onClick: function () { open[1](true); },
 					},
 					h(
 						"span",
-						{ className: "vibex-setup-glyph" },
+						{ className: "cipher-setup-glyph" },
 						h(
 							"svg",
 							{ width: 16, height: 16, viewBox: "0 0 24 24", fill: "none", "aria-hidden": "true" },
@@ -1132,13 +1132,13 @@ window.__ModuleLoader__.load({
 				init.headers["content-type"] = "application/json";
 				init.body = JSON.stringify(body);
 			}
-			var url = "/vibex/agent-instructions?mode=" + encodeURIComponent(mode);
+			var url = "/cipher/agent-instructions?mode=" + encodeURIComponent(mode);
 			return window.fetch(url, init).then(function (response) {
 				return response
 					.json()
 					.catch(function () { return {}; })
 					.then(function (payload) {
-						if (!response.ok) throw new Error((payload && payload.error) || "vibeX returned HTTP " + response.status + ".");
+						if (!response.ok) throw new Error((payload && payload.error) || "CIPHER returned HTTP " + response.status + ".");
 						return payload;
 					});
 			});
@@ -1237,14 +1237,14 @@ window.__ModuleLoader__.load({
 				),
 				h(
 					"div",
-					{ className: "vibex-tabs", role: "tablist", "aria-label": "vibeX instruction modes" },
+					{ className: "cipher-tabs", role: "tablist", "aria-label": "CIPHER instruction modes" },
 					INSTRUCTION_MODES.map(function (entry) {
 						return h(
 							"button",
 							{
 								key: entry.id,
 								type: "button",
-								className: "vibex-tab",
+								className: "cipher-tab",
 								role: "tab",
 								"aria-selected": mode === entry.id,
 								"aria-pressed": mode === entry.id,
@@ -1255,24 +1255,24 @@ window.__ModuleLoader__.load({
 						);
 					})
 				),
-				h("p", { className: "vibex-hint" }, modeInfo.description),
+				h("p", { className: "cipher-hint" }, modeInfo.description),
 				h(
 					"div",
-					{ className: "vibex-meta" },
+					{ className: "cipher-meta" },
 					meta && meta.path ? h("code", null, meta.path) : h("span", null, "Loading instructions..."),
 					meta ? h("span", null, formatBytes(new TextEncoder().encode(content).length) + " of " + formatBytes(meta.maxBytes)) : null,
 					meta && meta.updatedAt ? h("span", null, "Updated " + formatWhen(meta.updatedAt)) : null,
-					meta && meta.editable ? h("span", { className: "vibex-pill" }, "Editable mode") : null,
-					meta && !meta.editable ? h("span", { className: "vibex-pill" }, "Read-only shared rules") : null,
+					meta && meta.editable ? h("span", { className: "cipher-pill" }, "Editable mode") : null,
+					meta && !meta.editable ? h("span", { className: "cipher-pill" }, "Read-only shared rules") : null,
 					meta && meta.exists === false ? h("span", null, "The file does not exist yet. Saving creates it.") : null
 				),
 				h("textarea", {
-					className: "vibex-editor",
+					className: "cipher-editor",
 					value: content,
 					spellCheck: false,
 					disabled: busy,
 					readOnly: !canEdit,
-					"aria-label": "vibeX " + modeInfo.label + " instructions",
+					"aria-label": "CIPHER " + modeInfo.label + " instructions",
 					placeholder: mode === "shared" ? "Shared safety rules are protected in this editor." : "# " + modeInfo.label + " instructions",
 					onChange: function (event) { contentState[1](event.target.value); noticeState[1](""); },
 					onKeyDown: function (event) {
@@ -1284,24 +1284,24 @@ window.__ModuleLoader__.load({
 				}),
 				h(
 					"div",
-					{ className: "vibex-editor-actions" },
+					{ className: "cipher-editor-actions" },
 					h(
 						"button",
-						{ type: "button", className: "vibex-btn", disabled: busy, onClick: reload },
+						{ type: "button", className: "cipher-btn", disabled: busy, onClick: reload },
 						"Reload"
 					),
 					h(
 						"button",
-						{ type: "button", className: "vibex-btn vibex-btn-primary", disabled: busy || !dirty || !canEdit, onClick: save },
+						{ type: "button", className: "cipher-btn cipher-btn-primary", disabled: busy || !dirty || !canEdit, onClick: save },
 						status === "saving" ? "Saving..." : "Save changes"
 					),
-					dirty && status !== "saving" ? h("span", { className: "vibex-dirty" }, "Unsaved changes · Ctrl+S") : null
+					dirty && status !== "saving" ? h("span", { className: "cipher-dirty" }, "Unsaved changes · Ctrl+S") : null
 				),
-				notice ? h("p", { className: "vibex-ok" }, notice) : null,
-				failure ? h("p", { className: "vibex-error" }, failure) : null,
+				notice ? h("p", { className: "cipher-ok" }, notice) : null,
+				failure ? h("p", { className: "cipher-error" }, failure) : null,
 				h(
 					"p",
-					{ className: "vibex-hint" },
+					{ className: "cipher-hint" },
 					mode === "shared"
 						? "Shared safety rules are locked here and apply to every preset."
 						: "Saved to " + (meta && meta.path ? meta.path : modeInfo.label + " instructions") + ". New sessions in this mode load this file; its previous revision is kept as a .bak file."
@@ -1309,11 +1309,11 @@ window.__ModuleLoader__.load({
 			);
 		}
 
-		function VibexSettings() {
+		function CipherSettings() {
 			return h(
 				"div",
-				{ className: "vibex-settings" },
-				h("h2", null, "vibeX security setup"),
+				{ className: "cipher-settings" },
+				h("h2", null, "CIPHER security setup"),
 				h("p", null, "Your local assistant for authorized security engineering, defensive analysis, and secure coding."),
 				h(AgentInstructionsEditor, null),
 				h("h3", null, "Model providers"),
@@ -1326,7 +1326,7 @@ window.__ModuleLoader__.load({
 					"button",
 					{
 						type: "button",
-						className: "vibex-btn",
+						className: "cipher-btn",
 						onClick: function () { window.setTimeout(openSettingsModels, 80); },
 					},
 					"Open Models"
@@ -1341,7 +1341,7 @@ window.__ModuleLoader__.load({
 				h(
 					"p",
 					null,
-					"General → Permission → Admin (full access) removes sandbox limits and approval prompts; vibeX asks you to confirm first. For OS-level administrator rights, launch vibeX-ADMIN.bat (Windows) or sudo ./vibex-admin.sh (Kali)."
+					"General → Permission → Admin (full access) removes sandbox limits and approval prompts; CIPHER asks you to confirm first. For OS-level administrator rights, launch CIPHER-ADMIN.bat (Windows) or sudo ./cipher-admin.sh (Kali)."
 				),
 				h("h3", null, "Cyber skills"),
 				h(
@@ -1364,7 +1364,7 @@ window.__ModuleLoader__.load({
 					return function () {
 						observer.disconnect();
 					};
-				}, "vibex-brand: document title");
+				}, "cipher-brand: document title");
 			}
 			var scrubber = startScrubber();
 			if (scrubber !== null) {
@@ -1372,33 +1372,33 @@ window.__ModuleLoader__.load({
 					return function () {
 						scrubber.disconnect();
 					};
-				}, "vibex-brand: UI copy and status branding");
+				}, "cipher-brand: UI copy and status branding");
 			}
 			ctx.slots.inject("sidebar.brand.mark", () => ctx.slots.inject("sidebar.brand.name", function* () {
-				yield ctx.slots.register({ name: "sidebar.brand.mark" }, VibexMark);
-				yield ctx.slots.register({ name: "sidebar.brand.name" }, VibexName);
+				yield ctx.slots.register({ name: "sidebar.brand.mark" }, CipherMark);
+				yield ctx.slots.register({ name: "sidebar.brand.name" }, CipherName);
 			}));
 			ctx.slots.inject("conversation.hero.brand.mark", () => ctx.slots.register({
 				name: "conversation.hero.brand.mark",
 			}, HeroMark));
 			ctx.slots.inject("sidebar.footer.action", () => ctx.slots.register({
 				name: "sidebar.footer.action",
-				id: "vibex-setup",
+				id: "cipher-setup",
 			}, SetupEntry));
 			ctx.slots.inject("sidebar.footer.action", () => ctx.slots.register({
 				name: "sidebar.footer.action",
-				id: "vibex-cyber",
+				id: "cipher-cyber",
 			}, CyberEntry));
 			ctx.slots.inject("settings.section", () => {
 				try {
 					return ctx.slots.register({
 						name: "settings.section",
-						id: "vibex",
+						id: "cipher",
 						order: 5,
-						label: function () { return "vibeX"; },
-					}, VibexSettings);
+						label: function () { return "CIPHER"; },
+					}, CipherSettings);
 				} catch (error) {
-					if (typeof console !== "undefined") console.warn("vibex-brand: settings section unavailable", error);
+					if (typeof console !== "undefined") console.warn("cipher-brand: settings section unavailable", error);
 					return function () {};
 				}
 			});

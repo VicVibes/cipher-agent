@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# vibeX admin mode for Kali/Linux: run the whole agent elevated.
+# CIPHER admin mode for Kali/Linux: run the whole agent elevated.
 # Needed for raw-socket tools (nmap SYN scans, packet capture, binding <1024).
 # Only run this on a machine you own.
 set -e

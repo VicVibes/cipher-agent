@@ -1,4 +1,4 @@
-# VIBEX-RED-TEAM.md
+# CIPHER-RED-TEAM.md
 
 # Red Team Instructions
 
