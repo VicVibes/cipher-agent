@@ -71,6 +71,13 @@ window.__ModuleLoader__.load({
 			".cipher-row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}",
 			".cipher-field-head{display:flex;align-items:center;justify-content:space-between;gap:10px}",
 			".cipher-field-actions{display:inline-flex;align-items:center;gap:10px;flex:none}",
+			".cipher-model-list{display:flex;flex-direction:column;gap:2px;max-height:220px;overflow:auto;padding:5px;border:1px solid rgba(127,127,127,.35);border-radius:8px;background:rgba(127,127,127,.05)}",
+			".cipher-model-option{display:flex;align-items:flex-start;gap:8px;padding:6px 8px;border-radius:6px;font-size:12px;line-height:1.45;cursor:pointer}",
+			".cipher-model-option:hover{background:rgba(127,127,127,.12)}",
+			".cipher-model-option input{flex:none;margin:2px 0 0;accent-color:#22d3ee}",
+			".cipher-model-option-name{overflow-wrap:anywhere}",
+			".cipher-model-ids{box-sizing:border-box;width:100%;min-height:84px;padding:8px 10px;border:1px solid rgba(127,127,127,.4);border-radius:8px;background:rgba(127,127,127,.08);color:inherit;font:inherit;font-size:13px;line-height:1.45;resize:vertical}",
+			".cipher-model-ids:focus{outline:none;border-color:#22d3ee;box-shadow:0 0 0 2px rgba(34,211,238,.18)}",
 			".cipher-link{border:0;background:transparent;color:#22d3ee;font:inherit;font-size:12px;padding:2px 0;cursor:pointer}",
 			".cipher-link:hover{text-decoration:underline}",
 			".cipher-link:disabled{opacity:.5;cursor:default;text-decoration:none}",
@@ -382,7 +389,7 @@ window.__ModuleLoader__.load({
 				api: "openai-completions",
 				displayName: "Venice",
 				modelPlaceholder: "venice-uncensored",
-				modelHint: "Exact model id from your Venice dashboard. The key is sent only to api.venice.ai.",
+				modelHint: "Fetch and check the models you want, or enter model IDs one per line. The key is sent only to api.venice.ai.",
 			},
 			{
 				id: "openrouter",
@@ -393,7 +400,7 @@ window.__ModuleLoader__.load({
 				api: "openai-completions",
 				displayName: "OpenRouter",
 				modelPlaceholder: "openrouter/auto",
-				modelHint: "Any route id, for example openrouter/auto or anthropic/claude-sonnet-4.5.",
+				modelHint: "Fetch and check the models you want, or enter model IDs one per line (for example openrouter/auto).",
 			},
 			{
 				id: "custom",
@@ -404,7 +411,7 @@ window.__ModuleLoader__.load({
 				api: "openai-completions",
 				displayName: "",
 				modelPlaceholder: "model-id",
-				modelHint: "The model id your endpoint serves. Works with relays, Ollama, vLLM, and compatible gateways.",
+				modelHint: "Enter model IDs one per line. Works with relays, Ollama, vLLM, and compatible gateways.",
 			},
 		];
 
@@ -480,6 +487,12 @@ window.__ModuleLoader__.load({
 			]);
 		}
 
+		function parseModelIds(text) {
+			return Array.from(new Set(text.split(/[\r\n,]+/).map(function (id) {
+				return id.trim();
+			}).filter(Boolean)));
+		}
+
 		function SetupCard(props) {
 			var onClose = props.onClose;
 			var selectedTab = useState("venice");
@@ -491,6 +504,7 @@ window.__ModuleLoader__.load({
 
 			var keyState = useState("");
 			var modelState = useState("");
+			var selectedModelsState = useState([]);
 			var routeState = useState("");
 			var baseState = useState("");
 			var apiState = useState("openai-completions");
@@ -505,6 +519,7 @@ window.__ModuleLoader__.load({
 
 			var apiKey = keyState[0];
 			var modelId = modelState[0];
+			var selectedModelIds = selectedModelsState[0];
 			var customRoute = routeState[0];
 			var customBase = baseState[0];
 			var customApi = apiState[0];
@@ -520,6 +535,7 @@ window.__ModuleLoader__.load({
 				selectedTab[1](id);
 				keyState[1]("");
 				modelState[1]("");
+				selectedModelsState[1]([]);
 				failureState[1]("");
 				connectedState[1](null);
 				candidatesState[1]([]);
@@ -534,6 +550,9 @@ window.__ModuleLoader__.load({
 				var baseURL = (isCustom ? customBase : option.baseURL).trim();
 				var api = isCustom ? customApi : option.api;
 				var keyValue = apiKey.trim();
+				var previousModelIds = manual
+					? selectedModelIds.concat(parseModelIds(modelId))
+					: selectedModelIds;
 				if (!/^https?:\/\/[^\s]+$/.test(baseURL)) {
 					failureState[1]("Set the base URL first: it must start with http:// or https://.");
 					return;
@@ -557,7 +576,11 @@ window.__ModuleLoader__.load({
 						if (unique.length === 0) throw new Error("The endpoint returned no models. Type the id by hand.");
 						candidatesState[1](unique);
 						manualState[1](false);
-						if (unique.length === 1) modelState[1](unique[0].id);
+						selectedModelsState[1](unique.length === 1
+							? [unique[0].id]
+							: previousModelIds.filter(function (id) {
+								return unique.some(function (model) { return model.id === id; });
+							}));
 					})
 					.catch(function (error) {
 						failureState[1](String((error && error.message) || error));
@@ -578,7 +601,9 @@ window.__ModuleLoader__.load({
 				var api = isCustom ? customApi : option.api;
 				var displayName = (isCustom ? customName : option.displayName).trim();
 				var keyValue = apiKey.trim();
-				var modelValue = modelId.trim();
+				var modelIds = candidates.length > 0 && !manual
+					? selectedModelIds.slice()
+					: parseModelIds(modelId);
 
 				if (!/^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/.test(route)) {
 					failureState[1]('Provider id must be lowercase letters, digits, and hyphens, starting with a letter (for example "local-ai").');
@@ -597,13 +622,21 @@ window.__ModuleLoader__.load({
 					failureState[1]("Paste your API key.");
 					return;
 				}
-				if (!/^\S+$/.test(modelValue)) {
-					failureState[1]("Enter the exact model id with no spaces.");
+				if (modelIds.length === 0) {
+					failureState[1]("Select at least one model or enter one or more model IDs.");
+					return;
+				}
+				if (modelIds.some(function (id) { return !/^\S+$/.test(id); })) {
+					failureState[1]("Model IDs cannot contain spaces. Put each exact ID on its own line.");
 					return;
 				}
 
 				busyState[1](true);
-				var profile = { api: api, baseURL: baseURL, models: [{ id: modelValue }] };
+				var profile = {
+					api: api,
+					baseURL: baseURL,
+					models: modelIds.map(function (id) { return { id: id }; }),
+				};
 				if (displayName) profile.displayName = displayName;
 				if (keyValue) profile.apiKeyEnv = apiKeyRef(route);
 
@@ -626,13 +659,13 @@ window.__ModuleLoader__.load({
 						return apiCall("credentials/set", { ref: profile.apiKeyEnv, value: keyValue });
 					})
 					.then(function () {
-						return setDefaultModel(route, modelValue);
+						return setDefaultModel(route, modelIds[0]);
 					})
 					.then(function () {
 						keyState[1]("");
 						connectedState[1]({
 							name: displayName || route,
-							model: modelValue,
+							models: modelIds,
 						});
 					})
 					.catch(function (error) {
@@ -665,7 +698,7 @@ window.__ModuleLoader__.load({
 							className: "cipher-card",
 							role: "dialog",
 							"aria-modal": "true",
-							"aria-label": "Connect a model to CIPHER",
+							"aria-label": "Connect models to CIPHER",
 							onKeyDown: function (event) {
 								if (event.key === "Enter" && event.target && event.target.tagName === "INPUT") {
 									event.preventDefault();
@@ -673,19 +706,19 @@ window.__ModuleLoader__.load({
 								}
 							},
 						},
-						h("h2", null, "Connect a model to CIPHER"),
+						h("h2", null, "Connect models to CIPHER"),
 						h(
 							"p",
 							null,
 							connected
-								? "Saved. New sessions start on this model."
-								: "Enter the key here. CIPHER stores it locally and makes it the default for new sessions."
+								? "Saved. The first model is the default for new sessions; you can choose any added model for a request."
+								: "Add one or more models. The first is the default for new sessions; use the model picker to choose another for a request."
 						),
 						connected
 							? h(
 									"div",
 									{ className: "cipher-success" },
-									h("p", { className: "cipher-ok" }, "Connected to " + connected.name + " · " + connected.model + "."),
+									h("p", { className: "cipher-ok" }, "Connected to " + connected.name + " · " + connected.models.length + " model" + (connected.models.length === 1 ? "" : "s") + ". Default: " + connected.models[0] + "."),
 									h("p", { className: "cipher-hint" }, "The key is stored in .dsh/.credentials.yaml on this machine."),
 									h(
 										"div",
@@ -700,7 +733,7 @@ window.__ModuleLoader__.load({
 													window.setTimeout(function () { window.location.reload(); }, 150);
 												},
 											},
-											"Start using it"
+											"Start using them"
 										)
 									)
 								)
@@ -833,7 +866,7 @@ window.__ModuleLoader__.load({
 											h(
 												"div",
 												{ className: "cipher-field-head" },
-												h("span", { className: "cipher-label" }, "Model id"),
+												h("span", { className: "cipher-label" }, candidates.length > 0 && !manual ? "Select models to add" : "Model IDs (one per line)"),
 												h(
 													"span",
 													{ className: "cipher-field-actions" },
@@ -843,7 +876,25 @@ window.__ModuleLoader__.load({
 																{
 																	type: "button",
 																	className: "cipher-link",
-																	onClick: function () { manualState[1](!manualState[0]); },
+																	onClick: function () {
+																		var next = !manualState[0];
+																		failureState[1]("");
+																		if (next) {
+																			if (selectedModelIds.length > 0) modelState[1](selectedModelIds.join("\n"));
+																			manualState[1](true);
+																			return;
+																		}
+																		var typedIds = parseModelIds(modelId);
+																		var unknownIds = typedIds.filter(function (id) {
+																			return !candidates.some(function (model) { return model.id === id; });
+																		});
+																		if (unknownIds.length > 0) {
+																			failureState[1]("Some entered IDs are not in the fetched list. Keep manual entry selected to save them.");
+																			return;
+																		}
+																		selectedModelsState[1](typedIds);
+																		manualState[1](false);
+																	},
 																},
 																manual ? "Use list" : "Type manually"
 															)
@@ -862,32 +913,46 @@ window.__ModuleLoader__.load({
 											),
 											candidates.length > 0 && !manual
 												? h(
-														"select",
+														"div",
 														{
-															className: "cipher-input",
-															value: modelId,
-															onChange: function (event) { modelState[1](event.target.value); },
+															className: "cipher-model-list",
+															role: "group",
+															"aria-label": "Select one or more models",
 														},
-														h("option", { value: "" }, "Select a model (" + candidates.length + ")"),
 														candidates.map(function (model) {
-															return h(
-																"option",
-																{ key: model.id, value: model.id },
-																model.name && model.name !== model.id ? model.id + " — " + model.name : model.id
+															var checked = selectedModelIds.indexOf(model.id) !== -1;
+															return h("label", { key: model.id, className: "cipher-model-option" },
+																h("input", {
+																	type: "checkbox",
+																	checked: checked,
+																	disabled: busy || fetching,
+																	onChange: function (event) {
+																		var next = selectedModelIds.slice();
+																		var index = next.indexOf(model.id);
+																		if (event.target.checked && index === -1) next.push(model.id);
+																		else if (!event.target.checked && index !== -1) next.splice(index, 1);
+																		selectedModelsState[1](next);
+																	},
+																}),
+																h("span", { className: "cipher-model-option-name" },
+																	model.name && model.name !== model.id ? model.id + " — " + model.name : model.id
+																)
 															);
 														})
 													)
-												: h("input", {
-														className: "cipher-input",
-														type: "text",
+												: h("textarea", {
+														className: "cipher-model-ids",
 														value: modelId,
-														placeholder: option.modelPlaceholder,
+														placeholder: option.modelPlaceholder + "\nmodel-id-two",
 														spellCheck: false,
-														autoComplete: "off",
+														rows: 3,
 														onChange: function (event) { modelState[1](event.target.value); },
 													})
 										),
-										h("p", { className: "cipher-hint" }, option.modelHint)
+										h("p", { className: "cipher-hint" }, option.modelHint),
+										candidates.length > 0 && !manual
+											? h("p", { className: "cipher-hint" }, selectedModelIds.length + " selected · the first selected model becomes the default.")
+											: null
 									),
 									failure ? h("p", { className: "cipher-error" }, failure) : null,
 									h(

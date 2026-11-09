@@ -42,10 +42,12 @@ You can also provide `VENICE_API_KEY` in the environment. Credentials and
 session data stay local and are ignored by Git. The default is DeepSeek V4.1
 Flash 1017 Abliterated (E2EE), capped at 128K context and 8K output tokens.
 Venice charges for tokens processed and generated, not for models merely
-being listed. Optional Auto Review can add a separate model request for each
-tool action. Existing sessions may retain their prior model selection; start
-a new session to use the current default. Check provider spend controls before
-running long tasks.
+being listed. Enable several models in the provider setup, then choose which
+one to use with the model picker; the first selected model is the default for
+new sessions. Only the chosen model handles a request. Optional Auto Review
+can add a separate model request for each tool action. Existing sessions may
+retain their prior model selection; start a new session to use the current
+default. Check provider spend controls before running long tasks.
 
 ## Start the GUI manually
 
