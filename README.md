@@ -5,6 +5,10 @@ shared rules are in `AGENTS.md`; each mode adds one editable instruction file:
 `CIPHER-BLUE-TEAM.md`, `CIPHER-RED-TEAM.md`, or
 `CIPHER-RESEARCH-MODE.md`.
 
+## CIPHER in action
+
+![CIPHER interface with private workspace and local network details redacted](docs/images/cipher-network-discovery.png)
+
 ## Requirements
 
 - Node.js 24.9 or newer
