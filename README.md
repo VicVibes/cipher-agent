@@ -57,23 +57,29 @@ npm start
 
 ## CLI
 
-The CLI runs one task per invocation without starting a browser or server.
+The CLI runs without starting a browser or server. For a guided start:
 
-```powershell
-npm run start:cli -- --mode blue-team "Review this project's security configuration"
-npm run start:cli -- --mode research-mode "Explain this local test result"
+- **Windows:** double-click `CIPHER-CLI.bat`.
+- **Linux/macOS:** run `chmod +x CIPHER-CLI.sh` once, then `./CIPHER-CLI.sh`.
+
+CIPHER prompts for a mode and task. Press Enter to use Blue Team. It defaults
+to read-only permissions and has no live approval prompt.
+
+You can also pass a task directly:
+
+```sh
+./CIPHER-CLI.sh --mode blue-team "Review this project's security configuration"
 ```
 
-On Windows, the same launcher is available as `CIPHER-CLI.bat`. Continue a
-headless conversation by running with `--json`, copying `session.sessionId`
-from the opening event, and passing that value on the next invocation:
+For scripts and automation, use `npm run start:cli -- --json "task"`. Continue
+a headless conversation by copying `session.sessionId` from the opening event
+and passing it on the next invocation:
 
 ```powershell
 npm run start:cli -- --json "Review this project's security configuration"
 npm run start:cli -- --session-id session-id-here "Continue the review"
 ```
 
-The CLI defaults to read-only permissions and has no live approval prompt.
 Use the GUI for actions that require interactive approval. Red Team mode still
 follows `AGENTS.md` and requires explicit authorization and scope.
 
