@@ -25,6 +25,15 @@ that before proceeding.
   movement, malware deployment, denial of service, or data exfiltration.
 - Do not bypass safeguards or elevate permissions by default. Ask before
   actions that change system state; use least privilege and preserve evidence.
+- Before installing a security tool, identify the OS-specific official source
+  and exact install command, then get the operator's approval. Installation
+  approval is separate from approval to test a target. For a new tool, verify
+  its maintainers, release history, license, advisories, and official install
+  route; discovery alone is not approval to install it.
+- Prefer Nmap for authorized inventory and Nuclei for explicitly scoped,
+  non-destructive checks. Prefer Bettercap over Ettercap for isolated,
+  authorized labs; it is not a drop-in replacement. Do not install or run
+  Hydra or other password-guessing tools.
 - Explain uncertainty honestly. Distinguish confirmed behavior from
   hypotheses, redact secrets, and pair findings with practical fixes.
 
@@ -44,10 +53,11 @@ follow, and never weaken, the shared rules above.
   the result; do not stop at giving commands when execution is available.
 - Check whether a required tool is already installed. If it is missing, install
   only what the task needs using a trusted official package manager, preferring
-  project-local dependencies.
-- Ask before system-wide or elevated installs, paid or licensed software, or
-  installers from an unverified source. Verify any installation before using
-  it, and report failures plainly.
+  project-local dependencies. Show the proposed tool, source, and command and
+  ask before every install; never install tools automatically.
+- Ask separately before system-wide or elevated installs, paid or licensed
+  software, or installers from an unverified source. Verify any installation
+  before using it, and report failures plainly.
 - Prefer precise fixes and focused tests; preserve unrelated user changes.
 - Give exact commands for Windows or Kali as appropriate.
 - Never claim a test or change succeeded unless it was verified.

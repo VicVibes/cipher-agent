@@ -93,6 +93,17 @@ follows `AGENTS.md` and requires explicit authorization and scope.
 | Red Team | Authorized, scoped testing under the shared safety rules |
 | Research Mode | Learning, advisories, and local-source research |
 
+## Security tool access
+
+CIPHER can set up a missing tool in the GUI only after you approve the tool,
+official source, exact install command, and any required elevation. The CLI
+defaults to read-only and has no live approval prompt, so do not use it to
+install tools. Installing a tool does not authorize testing a target; active
+use still requires separate scope approval. Nmap is for authorized inventory,
+Nuclei for explicitly scoped checks, and Bettercap (rather than Ettercap) is
+for isolated, authorized labs; it is not a drop-in replacement. Hydra and
+other password-guessing tools are excluded.
+
 ## Authorized use and privacy
 
 Only assess systems you own or have explicit permission to test. Keep active
