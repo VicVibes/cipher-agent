@@ -9,12 +9,16 @@ if errorlevel 1 goto old_node
 where npm >nul 2>nul
 if errorlevel 1 goto missing_npm
 
-if not exist "node-app\node_modules\@deepseek-ai\dsh\lib\bin.js" (
-  echo Installing CIPHER dependencies. This may take a few minutes...
-  call npm run setup
-  if errorlevel 1 goto setup_failed
-)
+if not exist "node-app\node_modules\@deepseek-ai\dsh\lib\bin.js" goto setup
+if not exist ".dsh\profiles\web\node_modules\cipher-brand\package.json" goto setup
+goto start_gui
 
+:setup
+echo Installing CIPHER dependencies. This may take a few minutes...
+call npm run setup
+if errorlevel 1 goto setup_failed
+
+:start_gui
 echo Starting CIPHER...
 call npm start
 exit /b %errorlevel%

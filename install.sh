@@ -19,7 +19,8 @@ fi
 
 chmod +x scripts/*.sh
 
-if [ ! -f node-app/node_modules/@deepseek-ai/dsh/lib/bin.js ]; then
+if [ ! -f node-app/node_modules/@deepseek-ai/dsh/lib/bin.js ] || \
+   [ ! -f .dsh/profiles/web/node_modules/cipher-brand/package.json ]; then
   echo "Installing CIPHER dependencies. This may take a few minutes..."
   npm run setup
 fi
