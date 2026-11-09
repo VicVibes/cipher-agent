@@ -7,7 +7,9 @@ shared rules are in `AGENTS.md`; each mode adds one editable instruction file:
 
 ## CIPHER in action
 
-![CIPHER interface with private workspace and local network details redacted](docs/images/cipher-network-discovery.png)
+![CIPHER interface preview with synthetic sample data](docs/images/cipher-network-discovery.png)
+
+*Illustrative screenshot; network values are synthetic and use documentation-only IP ranges.*
 
 ## Requirements
 
