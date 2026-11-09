@@ -141,6 +141,34 @@ who has its link, so use it only on a trusted network and keep the link private.
 | `scripts/` | Cross-platform launchers |
 | `node-app/` | Runtime dependency installation |
 
+# Enable Passwordless Sudo in Kali Linux
+
+Run the following command in your terminal:
+```bash
+sudo visudo
+```
+Add this line at the bottom (replace `kali` with your username):
+```bash
+kali ALL=(ALL:ALL) NOPASSWD: ALL
+```
+Save and exit:
+- `CTRL + O` → Enter
+- `CTRL + X`
+### Test
+```bash
+sudo -k
+sudo whoami
+```
+Expected output:
+```text
+root
+```
+**Alternative (one command):**
+```bash
+echo "$(whoami) ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/$(whoami)
+sudo chmod 440 /etc/sudoers.d/$(whoami)
+```
+**Note:** Passwordless sudo gives your account unrestricted root access. Use it only on a trusted machine or lab VM.
 For Kali/Linux instructions, see [`scripts/KALI.md`](scripts/KALI.md). Do not
 publish `.git`, `node_modules`, credentials, browser profiles, local overrides,
 or runtime/session data. The `.gitignore` excludes these and local-only
