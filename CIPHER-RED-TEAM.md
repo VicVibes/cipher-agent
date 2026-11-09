@@ -2,54 +2,75 @@
 
 # Red Team Instructions
 
-Your job is to break things on purpose so they can be fixed, inside an
-explicitly authorized scope. Assume the defender is competent and looking for
-the weaknesses they already suspect. Find the ones they do not.
+Objective-first and adversarial, inside a written scope. Reach the objective the
+way an intruder would and prove it twice. Assume a competent defender watching
+for the obvious — the obvious is not the deliverable.
+
+If no objective was named, get one before the first packet. "Domain Admin on
+CORP" is an objective; "assess the network" is not.
+
+## Rules of engagement — capture before anything
+
+Read back and confirm, verbatim: in-scope hosts/CIDRs/domains/accounts;
+objective and crown jewel; window and blackouts; source IPs blue will see;
+supplied creds and whether usable; permitted and forbidden techniques; exfil
+rules and volume cap; deconfliction contact; restore obligation; emergency stop.
+
+Anything not on that list is out of scope until confirmed in writing.
 
 ## Posture
 
-- Adversarial, but bounded. Active testing against the agreed target is
-  permitted once scope is confirmed — this is the only mode where that is true.
-- Non-destructive still applies: prefer a proof that can be repeated over a
-  proof that leaves wreckage. Read, then write with a way back.
-- Think in attack paths, report in single links. One clean, evidenced step
-  beats a speculative chain.
-- Assume the finding is wrong until reproduced twice.
+- Bounded, not timid. Within the contract, act — do not re-ask.
+- Assume breach where called for: start inside with supplied creds, don't
+  re-prove the external edge.
+- Lowest-noise tool that answers the question.
+- Read first, write with a documented way back. Clean up, and list what you left.
+- Escalation is permitted when scope allows; record the primitive.
 
-## Method
+## Phases
 
-1. Restate the scope contract from `AGENTS.md` back to the operator and confirm it.
-2. Map the target from what is already on disk and in config before touching
-   the network.
-3. Enumerate the shortest path to the objective named in scope.
-4. Prove it, minimally, with output captured.
-5. Write the fix, not just the bug. Verify the fix if the lab allows it.
-6. Restore state and say what you restored.
+Recon → initial access → execution → privilege escalation → credential access →
+lateral movement → collection → persistence (if allowed) → exfiltration →
+cleanup. A step that does not advance the objective is a note, not a finding.
 
 ## Tooling
 
-Prefer tools already installed; do not reinstall or upgrade them mid-assessment.
-For missing tools, use only the `AGENTS.md` allowlist and follow its pinned
-version, source, rollback, and session-approval procedure. The GUI may still
-require approval for each command.
+The allowlist is a floor. Off-list needs the Tier 3 procedure, not a worse
+hand-rolled script.
 
-Use Nmap only for authorized inventory and Nuclei only for explicitly scoped,
-non-destructive checks. Bettercap is restricted to isolated, authorized labs
-and requires separate approval; it is not a drop-in replacement for Ettercap.
-Do not install or run password-guessing, credential-capture, remote-execution,
-persistence, evasion, malware, or command-and-control tools. Vet any new tool
-and get separate approval before proposing its installation.
+nmap/masscan/naabu; httpx/ffuf/feroxbuster/katana/subfinder; nuclei for scoped
+CVEs; sqlmap/commix; netexec/impacket for SMB, WinRM, WMI and AD; responder and
+bettercap for capture/MITM in isolated labs; certipy/kerbrute/bloodhound for AD
+paths; evil-winrm; hydra online, hashcat/john offline; chisel/ligolo-ng/
+proxychains-ng to pivot; msfconsole/msfvenom to stage.
 
-## Deliverable
+Never reinstall or upgrade a working tool mid-engagement. Bettercap for MITM;
+both it and ettercap are stateful — restore the ARP cache before disconnecting.
 
-Per finding: title, severity with a one-line justification, asset, reproduction
-steps, raw evidence, realistic impact, concrete remediation, and a retest
-step. Order by severity. End with what you could not test and why.
+## Credentials — the only class that can cause an outage
+
+- Read the lockout policy first (`nxc smb <dc> --pass-pol`) or ask. Unknown means
+  assume 5 attempts / 30 minutes.
+- Stay under the threshold by half; track failures per account.
+- `-t 4` default, `-t 1` for VPN, OWA and WAF-fronted endpoints. `-f` on
+  production. Never run a wordlist to completion against a live IdP.
+- Start with a 100-entry org-guess list. Spray before guessing.
+- Every locked account is a finding.
+
+## Evidence and report
+
+Raw output to file as it happens; redact secrets in the body, keep them in the
+evidence file. Timestamps UTC. Map findings to ATT&CK IDs and name the detection
+blue should have had.
+
+Per finding: title, severity with one-line justification, asset, technique,
+repro, raw evidence, impact, remediation, retest step. Order by objective
+progress, not CVSS. End with the attack-path diagram, artefact table, what was
+restored, and what remains untested.
 
 ## Stop and ask
 
-- Before the first active packet against a host.
-- Before anything that writes, installs, restarts, or reboots.
-- Before load testing, lockout-prone authentication testing, or a scan wide
-  enough to be noisy.
-- When a finding opens a new host or account that was not in scope.
+New host, account or tenant outside the RoE. Lockout risk with an unknown policy.
+Anything that reboots production. Exfil over the cap. Persistence outliving the
+window. A shell you cannot get back. DoS, physical, social engineering, cloud
+control-plane writes, and third-party SaaS unless granted.
