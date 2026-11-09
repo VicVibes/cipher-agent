@@ -19,6 +19,7 @@ window.__ModuleLoader__.load({
 			// through JetBrains Mono / DejaVu Sans Mono.
 			":root{--dsh-font-family-text-default:'Cascadia Code','JetBrains Mono','Fira Code',Consolas,'DejaVu Sans Mono','Liberation Mono',monospace;--dsh-font-family-text:var(--dsh-font-family-text-default);--dsw-font-family:var(--dsh-font-family-text-default);--dsw-font-family-brand:'Cascadia Code','JetBrains Mono','Fira Code',Consolas,monospace}",
 			"body,button,input,textarea,select{font-family:var(--dsh-font-family-text-default)}",
+			"button[aria-haspopup='menu'][class*='_trigger']:not(:disabled),button[class*='_modelOption']:not(:disabled){color:var(--dsw-alias-label-primary,#f8fafc)}",
 			"[data-chat-running]{--dsw-alias-label-deep-diving:#22d3ee;--dsw-alias-label-deep-diving-shimmer:#67e8f9;color:#22d3ee}",
 			"[data-chat-running] span[aria-hidden='true']:has(svg){display:inline-flex!important;align-items:center;justify-content:center}",
 			"[data-chat-running] span[aria-hidden='true']:has(svg)>*{display:none!important}",
